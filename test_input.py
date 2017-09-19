@@ -1,9 +1,8 @@
-import input
+import read_file.py
 
 def test_isfile()
     import os.path
     assert os.path.isfile(ecgdata)
-
 
 def test_hrrawdatasize()
     assert hrrawdata.amount() == 3
