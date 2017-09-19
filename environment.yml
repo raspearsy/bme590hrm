@@ -7,4 +7,3 @@ dependencies:
   - pytest-cov
   - ipython
   - pandas
-  - os
