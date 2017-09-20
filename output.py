@@ -1,4 +1,4 @@
-def summarizeECG(threshold_hr, hr, brady, tachy):
+def summarizeECG(instHR, avgHR, brady, tachy):
     """Create txt file summarizing ECG analysis
     :param instHR: (int)
     :param avgHR: (int)
