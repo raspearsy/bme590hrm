@@ -22,5 +22,5 @@ def summarizeECG(instHR, avgHR, brady, tachy):
     bradystr = "Bradycardia occurred at: %s" % str(brady)
     tachystr = "Tachycardia occurred at: %s" % str(tachy)
 
-    ecgResults.write(instHRstr + ' BPM\n' + avgHRstr + ' BPM\n' + bradystr + '\n' + tachystr)
+    ecgResults.write(instHRstr + ' BPM\n' + avgHRstr + ' BPM\n' + bradystr + ' sec\n' + tachystr + ' sec')
     ecgResults.close()
