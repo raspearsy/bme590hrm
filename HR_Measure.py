@@ -5,6 +5,7 @@
 import math
 import numpy
 import pandas as pd
+from read_file import input_dataframe
 # Maybe hr (passed in vector) should be three columns so that I can always pass it in, and just fill as needed
 
 
@@ -74,14 +75,13 @@ def bradydetector(hr, hr_threshold_brady):
         # timestamp = x * delta_t
         if hr['HeartRate'][x] < hr_threshold_brady:
             bradycount += 1
-            if bradycount > 0:
-                print("Bradycardia Detected! Either you're an athlete or something's wrong!")
             hr.at[x, 'B/T'] = 'Bradycardia Detected'
     return hr
 
 
 def tachydetector(hr, hr_threshold_tachy):
     """detects tachycardia
+
     :param hr: list of Heart Rates
     :param hr_threshold_tachy: threshold HR for detection
     :return: Number of instances of Bradycardia, time stamp for Bradycardia, return HR list with added colomns
@@ -91,7 +91,11 @@ def tachydetector(hr, hr_threshold_tachy):
     for x in range(0, len(hr)):
         if hr['HeartRate'][x] > hr_threshold_tachy:
             tachycount += 1
-            if tachycount > 0:
-                print("Tachycardia Detected! Either you're sprinting or something's wrong!")
             hr.at[x, 'B/T'] = 'Tachycardia Detected'
     return hr
+
+if __name__ == '__main__':
+    hr_rawdata_new = input_dataframe()
+    hr_data = hrdetector(hr_rawdata_new)
+    hr_data2 = bradydetector(hr_data, 50)
+    hr_data3 = tachydetector(hr_data2, 100)
