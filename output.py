@@ -1,9 +1,7 @@
-def summarizeECG(instHR, avgHR, brady, tachy):
+def summarizeECG(data):
     """Create txt file summarizing ECG analysis
-    :param instHR: (int)
-    :param avgHR: (int)
-    :param brady: (int)
-    :param tachy: (int)
+
+    :param data: dict{instHR, avgHR, brady, tachy}
     """
     #Calls hrdetector() to get instantaneous heart rate
     #instHR = findInstHR()
@@ -16,11 +14,13 @@ def summarizeECG(instHR, avgHR, brady, tachy):
     #tachy = tachyTimes()
     
     #Writes the output of the ECG analysis to an output file named ecgOutput.txt
-    ecgResults = open('ecgOutput.txt','w')
-    instHRstr = "Estimated instantaneous heart rate: %s" % str(instHR)
-    avgHRstr = "Estimated average heart rate: %s" % str(avgHR)
-    bradystr = "Bradycardia occurred at: %s" % str(brady)
-    tachystr = "Tachycardia occurred at: %s" % str(tachy)
+    with open('ecgOutput.txt','w') as ecgResults:
+        instHRstr = "Estimated instantaneous heart rate: {}".format(data['instHR'])
+        avgHRstr = "Estimated average heart rate: {}".format(data['avgHR'])
+        if data['brady'] is None:
+            bradystr = "Bradycardia never occurred."
+        else:
+            bradystr = "Bradycardia occurred at: {}".format(data['brady'])
+        tachystr = "Tachycardia occurred at: {}".format(data['tachy'])
 
-    ecgResults.write(instHRstr + ' BPM\n' + avgHRstr + ' BPM\n' + bradystr + ' sec\n' + tachystr + ' sec')
-    ecgResults.close()
+        ecgResults.write(instHRstr + ' BPM\n' + avgHRstr + ' BPM\n' + bradystr + ' sec\n' + tachystr + ' sec')
