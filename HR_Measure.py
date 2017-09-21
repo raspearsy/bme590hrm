@@ -15,7 +15,7 @@ def thresholdhr(hr_rawdata):
     """
 
     # time, voltage
-    threshold = 0.7  # %70 percent of max
+    threshold = 0.9  # %90 percent of max
     time_step = hr_rawdata['time'][2]-hr_rawdata['time'][1]
     data_chunk = int(math.floor(5/time_step))
     number_chunks = int(math.floor((len(hr_rawdata)/data_chunk)))
@@ -54,8 +54,8 @@ def hrdetector(hr_rawdata):
     # time_step = hr_rawdata['time'][2]-hr_rawdata['time'][1]  # find time step
     for j in range(0, len(thresholds)):
         for i in range(1, data_chunk):
-            if (hr_rawdata['voltage'][i*(j+1)] > thresholds[j]) and \
-                    (hr_rawdata['voltage'][(i*(j+1))-1] < thresholds[j]):
+            if (hr_rawdata['voltage'][i*(j+1)] > thresholds['Threshold'][j]) and \
+                    (hr_rawdata['voltage'][(i*(j+1))-1] < thresholds['Threshold'][j]):
                 hb_count[j] = hb_count[j] + 1
         hr.at[j, 'HeartRate'] = (hb_count[j]/5)*60
     return hr
