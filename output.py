@@ -17,11 +17,10 @@ def summarizeECG(instHR, avgHR, brady, tachy):
     #tachy = tachyTimes()
     
     #Writes the output of the ECG analysis to an output file named ecgOutput.txt
-    ecgResults = open('ecgOutput.txt','w')
-    instHRstr = "Estimated instantaneous heart rate: %s" % str(instHR)
-    avgHRstr = "Estimated average heart rate: %s" % str(avgHR)
-    bradystr = "Bradycardia occurred at: %s" % str(brady)
-    tachystr = "Tachycardia occurred at: %s" % str(tachy)
+    with open('ecgOutput.txt','w') as ecgResults:
+        instHRstr = "Estimated instantaneous heart rate: %s" % str(instHR)
+        avgHRstr = "Estimated average heart rate: %s" % str(avgHR)
+        bradystr = "Bradycardia occurred at: %s" % str(brady)
+        tachystr = "Tachycardia occurred at: %s" % str(tachy)
 
-    ecgResults.write(instHRstr + ' BPM\n' + avgHRstr + ' BPM\n' + bradystr + ' sec\n' + tachystr + ' sec')
-    ecgResults.close()
+        ecgResults.write(instHRstr + ' BPM\n' + avgHRstr + ' BPM\n' + bradystr + ' sec\n' + tachystr + ' sec')
