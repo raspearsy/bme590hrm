@@ -102,4 +102,3 @@ if __name__ == '__main__':
     hr_data3 = tachydetector(hr_data2, 140)
     print(hr_data3)
 
-
