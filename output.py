@@ -32,3 +32,5 @@ def summarizeECG(data):
         tachystr = "Tachycardia occurred at: {}".format(data['tachy'])
 
         ecgResults.write(instHRstr + ' BPM\n' + avgHRstr + ' BPM\n' + bradystr + ' sec\n' + tachystr + ' sec')
+
+if __name__ == '__main__'
