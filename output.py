@@ -4,7 +4,7 @@ import numpy as np
 def summarizeECG(data):
     """Create txt file summarizing ECG analysis
 
-    :param data: dict{instHR, avgHR, brady, tachy}
+    :param data: pandas dataframe {'Heartrate', brady/tachy, 'time'}
     """
 
     maxTime = data['time'].iget(-1)
