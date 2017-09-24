@@ -5,7 +5,7 @@ def summarizeECG(data):
     """Create txt file summarizing ECG analysis
 
     :param data: pandas dataframe {'Heartrate', 'B\T', 'time'}
-    :return output.txt
+    :return ecgResults.txt
     """
 
     #Finds the last time point in the data file
@@ -43,6 +43,7 @@ Please choose between 0s and {}s\n\n'.format(maxTime))
     #Get user specified stop time
     stopTimestr = 'Stop time (in seconds): '
 
+    #Check for valid input
     while True:
         try:
             stopTime = int(input(stopTimestr))
@@ -51,12 +52,15 @@ Please choose between 0s and {}s\n\n'.format(maxTime))
         else:
             break
 
+    #If user gives time later than maxTime just set stopTime to maxTime
     if stopTime > maxTime:
         stopTime = maxTime
 
+    #Tell user what is happening
     printStr = "ECG data will be summarized from {}s to {}s'".format(startTime,stopTime)
     print(printStr)
     
+    #Convert user input into indices - data is broken down in the dataframe file in chunks of 5seconds
     startInd =int(np.floor(startTime/5))
     stopInd = int(np.floor(stopTime/5))
 
