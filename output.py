@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 
+from HR_Measure import hr_data3
+
 def summarizeECG(data):
     """Create txt file summarizing ECG analysis
 
@@ -77,5 +79,5 @@ def summarizeECG(data):
         ecgResults.write(instHRStartstr + '\n' + instHRStopstr + '\n' avgHRstr + '\n' + bradystr + '\n' + tachystr)
 
 if __name__ == '__main__':
-    summarizeECG(data)
+    summarizeECG(hr_data3)
     
