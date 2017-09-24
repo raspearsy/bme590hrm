@@ -7,7 +7,7 @@ import numpy
 import pandas as pd
 from read_file import input_dataframe
 # Maybe hr (passed in vector) should be three columns so that I can always pass it in, and just fill as needed
-
+from output import summarizeECG
 
 def thresholdhr(hr_rawdata):
     """Will create a threshold array (in mV) on which to return the heart rate
@@ -99,3 +99,4 @@ if __name__ == '__main__':
     hr_data = hrdetector(hr_rawdata_new)
     hr_data2 = bradydetector(hr_data, 50)
     hr_data3 = tachydetector(hr_data2, 100)
+    summarizeECG(hr_data3)

@@ -1,83 +1,93 @@
 import pandas as pd
 import numpy as np
 
-from HR_Measure import hr_data3
-
 def summarizeECG(data):
     """Create txt file summarizing ECG analysis
 
     :param data: pandas dataframe {'Heartrate', 'B\T', 'time'}
+    :return output.txt
     """
 
-    maxTime = data['time'].iget(-1)
+    #Finds the last time point in the data file
+    maxTime = data['time'].iat[-1]
 
-    printStr = ("This program will summarize the ECG data.\n
-    Data recorded from 0s to {}s. \n
-    Enter a start and stop time in that range to get an instantaneous \n
-    heart rate at those times, an average rate over that period, \n
-    and any bradycardia or tachycardia events between those times.".format(maxTime))
+    #Tells user the purpose of this program
+    printStr = ("This program will summarize the ECG data.\n\
+Data recorded from 0s to {}s.\n\
+Enter a start and stop time in that range to get an instantaneous \n\
+heart rate at those times, an average rate over that period, \n\
+and any bradycardia or tachycardia events between those times.\n\n".format(maxTime))
+    print(printStr)
 
+    #Error messages for possible errors
+    errmsg_max =('\nThe time you selected is longer than the recorded data!\n\
+Please choose between 0s and {}s\n\n'.format(maxTime))
+    errmsg_notint = ('\nNot an integer! Please choose a time between 0s and {}s\n\n'.format(maxTime))
+    
     #Get user specified period for averaging heartrate
     startTimestr = 'Start time (in seconds): '
-    startTime = input(startTimestr)
     
-    #Error messages for possible errors
-    errmsg_max =('The time you selected is longer than the recorded data!\n
-        Please choose between 0s and {}s'.format(maxTime))
-    errmsg_notint = ('Not an integer! Please choose a time between 0s and {}s'.format(maxTime))
-    
-    #Check for errors
-    if startTime > maxTime:
-        print(errmsg_max)
-        startTime = input(startTimestr)
-    elif ~startTime.isnumeric():
-        print(errmsg_notint)
-        startTime = input(startTimestr)
+    #Check for valid input
+    while True:
+        try:
+            startTime = int(input(startTimestr))
+        except ValueError:
+            print(errmsg_notint)
+        else:
+            if startTime > maxTime:
+                print(errmsg_max)
+            else:
+                startTime = int(startTime)
+                break
 
     #Get user specified stop time
     stopTimestr = 'Stop time (in seconds): '
-    stopTime = input(stopTimestr)
+
+    while True:
+        try:
+            stopTime = int(input(stopTimestr))
+        except ValueError:
+            print(errmsg_notint)
+        else:
+            break
+
     if stopTime > maxTime:
-    #If user inputs stop time that's passed max time just set to max time
         stopTime = maxTime
-    elif ~stopTime.isnumer():
-        print(errmsg_notint)
-        stopTime = input(stopTimestr) 
 
     printStr = "ECG data will be summarized from {}s to {}s'".format(startTime,stopTime)
     print(printStr)
-
-    startInd = floor(startTime/5)
-    stopInd = floor(stopTime/5)
+    
+    startInd =int(np.floor(startTime/5))
+    stopInd = int(np.floor(stopTime/5))
 
     
     
     #Writes the output of the ECG analysis to an output file named ecgOutput.txt
     with open('ecgOutput.txt','w') as ecgResults:
-        instHRStartstr = "Estimated instantaneous heart rate at {}s: {}BPM".format(startTime,data[startInd,'HeartRate'])
-        instHRStopstr = "Estimated instaneous heart rate at {}s: {}BPM".format(stopTime,data[stopInd,'HeartRate'])
-        avgHR = data[startInd:stopInd,'HeartRate'].mean()
+        instHRStartstr = "Estimated instantaneous heart rate at {}s: {}BPM".format(startTime,data['HeartRate'][startInd])
+        instHRStopstr = "Estimated instaneous heart rate at {}s: {}BPM".format(stopTime,data['HeartRate'][stopInd])
+        avgHR = data['HeartRate'][startInd:stopInd].mean()
         avgHRstr = "Estimated average heart rate from {}s to {}s: {}BPM".format(startTime,stopTime,avgHR)
-
+        
+        bradyTimes = []
+        tachyTimes = []
         for j in range(startInd,stopInd):
-            bradyTimes = []
-            tachyTimes = []
-            if data[j,'B/T']=='Bradycardia Detected':
-                bradyTimes.append(data[j,'time'])
-            elif data[j,'B/T']=='Tachycardia Detected':
-                tachyTimes.append(data[j,'time'])
+            if data['B/T'][j]=='Bradycardia Detected':
+                bradyTimes.append(data['time'][j])
+            elif data['B/T'][j]=='Tachycardia Detected':
+                tachyTimes.append(data['time'][j])
 
-        if bradyTimes is None:
+        if not bradyTimes:
             bradystr = "Bradycardia never occurred."
         else:
             bradystr = "Bradycardia occurred at the following times (seconds): {}".format(bradyTimes)
-        if tachyTimes is None:
+        if not tachyTimes:
             tachystr = "Tachycardia never occurred."
         else:
             tachystr = "Tachycardia occurred at the following times (seconds): {}".format(tachyTimes)
 
-        ecgResults.write(instHRStartstr + '\n' + instHRStopstr + '\n' avgHRstr + '\n' + bradystr + '\n' + tachystr)
+        ecgResults.write(instHRStartstr + '\n' + instHRStopstr + '\n' + avgHRstr + '\n' + bradystr + '\n' + tachystr)
+        
 
 if __name__ == '__main__':
-    summarizeECG(hr_data3)
-    
+    summarizeECG(hr_data3)    
