@@ -8,7 +8,6 @@ import pandas as pd
 from read_file import input_dataframe
 # Maybe hr (passed in vector) should be three columns so that I can always pass it in, and just fill as needed
 
-
 def thresholdhr(hr_rawdata):
     """Will create a threshold array (in mV) on which to return the heart rate
     :param hr_rawdata: raw data input (time first column, voltage second column)
@@ -96,6 +95,10 @@ def tachydetector(hr, hr_threshold_tachy):
 
 if __name__ == '__main__':
     hr_rawdata_new = input_dataframe()
+    # print(hr_rawdata_new)
     hr_data = hrdetector(hr_rawdata_new)
     hr_data2 = bradydetector(hr_data, 50)
-    hr_data3 = tachydetector(hr_data2, 100)
+    print(hr_data2)
+    hr_data3 = tachydetector(hr_data2, 140)
+    print(hr_data3)
+
