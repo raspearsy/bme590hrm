@@ -24,5 +24,11 @@ def test_thresholdhr_unchanging(raw_data):
     assert thresholdhr(raw_data) == [thresholds, chunk, num_chunks]
 
 
+initial_messages = []
+hrs = []
+for ii in range(0, 10):
+    hrs.append(1/5*60)
+    initial_messages.append('Healthy... for now')
+test_hr1 = {'B/T': initial_messages, 'time': list(range(0, 51, 5)), 'HeartRate': hrs}
 def test_hrdetector(raw_data):
-    assert hrdetector(raw_data) == []
+    assert hrdetector(raw_data) == test_hr1
