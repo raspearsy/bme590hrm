@@ -36,6 +36,3 @@ def test_exception_nonnumeric_values():
 
 def test_exception_empty_file():
     assert len(input_dataframe("ecg_data_empty.csv")) == 0
-
-
-

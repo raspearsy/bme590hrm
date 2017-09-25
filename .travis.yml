@@ -10,6 +10,6 @@ install:
   - conda config --set always_yes yes --set changeps1 no # Set configuration on conda to not prompt for y/n prompts
   - conda update -q conda # Update
   - conda env create -f environment.yml # Create your envronment
-  - source activate bme590hrm # Activate your environment NOTE: Change ci-test to the name of your environment in environment.yml
+  - source activate BME590_hrm # Activate your environment NOTE: Change ci-test to the name of your environment in environment.yml
 script:
   - py.test # Run the tests
