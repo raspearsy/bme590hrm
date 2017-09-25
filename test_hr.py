@@ -1,5 +1,5 @@
-from HR_Measure.py import thresholdhr
-from HR_Measure.py import hrdetector
+from hr_measure import thresholdhr
+from hr_measure import hrdetector
 
 # need to test what happens when have too little data to create a chunk
 # need to throw an exception if have too little data

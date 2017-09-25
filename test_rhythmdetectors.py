@@ -1,5 +1,5 @@
-from hr_measure.py import tachydetector
-from hr_measure.py import bradydetector
+from hr_measure import tachydetector
+from hr_measure import bradydetector
 
 # need test dataframe test_hr1 that has 3 columns and 3 rows, where each successive row will
 # be tagged as no arrythmia, bradycardia, and tachycardia
