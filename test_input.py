@@ -27,7 +27,7 @@ def test_exception_nofile():
 
 def test_exception_nonnumeric_values():
     try:
-        ecg_nonnumeric_dataframe = input_dataframe("test_non_numeric_CSV.csv")
+        ecg_nonnumeric_dataframe = input_dataframe("test_non_numeric.csv")
         pd.to_numeric(ecg_nonnumeric_dataframe['time'])
         pd.to_numeric(ecg_nonnumeric_dataframe['voltage'])
         assert False

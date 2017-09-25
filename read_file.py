@@ -1,5 +1,4 @@
 import pandas as pd
-import sys
 # Input file as a Pandas DataFrame
 
 
@@ -15,7 +14,7 @@ def input_dataframe(file="ecg_data.csv"):
         ecg_dataframe = pd.read_csv(file, names=['time', 'voltage'], skiprows=1)
         if len(ecg_dataframe) == 0:
             print("No data found")
-            sys.exit(1)
+            return ecg_dataframe
         pd.to_numeric(ecg_dataframe['time'])
         pd.to_numeric(ecg_dataframe['voltage'])
     except FileNotFoundError:
