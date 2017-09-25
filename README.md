@@ -1,6 +1,6 @@
 # bme590hrm
 
-Integration: https://travis-ci.org/raspearsy/bme590hrm.svg?branch=master
+Integration: [![Build Status](https://travis-ci.org/raspearsy/bme590hrm.svg?branch=master)](https://travis-ci.org/raspearsy/bme590hrm)
 
 Group Members:
 Ryan Spears
