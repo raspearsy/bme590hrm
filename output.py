@@ -3,10 +3,12 @@ import numpy as np
 
 
 def summarizeECG(data):
-    """Create txt file summarizing ECG analysis
+    """.. function:: summarizeECG(data)
+    
+    Create txt file summarizing ECG analysis
 
     :param data: pandas dataframe {'Heartrate', 'B\T', 'time'}
-    :return ecgResults.txt
+    :rtype: ecgResults.txt
     """
 
     # Finds the last time point in the data file
