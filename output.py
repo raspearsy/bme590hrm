@@ -8,7 +8,8 @@ def summarizeECG(data):
     Create txt file summarizing ECG analysis
 
     :param data: pandas dataframe {'Heartrate', 'B\T', 'time'}
-    :rtype: ecgResults.txt
+    :rtype: txt file
+    :return: ecgResults.txt
     """
 
     # Finds the last time point in the data file
