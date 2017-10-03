@@ -58,7 +58,7 @@ Please choose between 0s and {}s\n\n'.format(maxTime))
         stopTime = maxTime
 
     # Tell user what is happening
-    printStr = "ECG data will be summarized from {}s to {}s'".format(startTime, stopTime)
+    printStr = "ECG data will be summarized from {}s to {}s".format(startTime, stopTime)
     print(printStr)
     
     # Convert user input into indices - data is broken down in the dataframe file in chunks of 5seconds
