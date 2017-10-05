@@ -3,7 +3,7 @@ import numpy
 
 from bioinput import Bioinput
 
-class Biomeasure():
+class Biomeasure:
     """
 
     """
@@ -13,7 +13,8 @@ class Biomeasure():
         self.__threshold = threshold
         self.__thr_brady = thr_brady
         self.__thr_tachy = thr_tachy
-        self.hr = pd.DataFrame(numpy.empty((10, 3))*numpy.nan, columns=['HeartRate', 'B/T', 'time']) # need to create from others' work
+        self.hr = pd.DataFrame(numpy.empty((10, 3))*numpy.nan, columns=['HeartRate', 'B/T', 'time'])
+        # need to create from others' work
         input = Bioinput()
         self.ecg_file = input.file
 
@@ -33,7 +34,6 @@ class Biomeasure():
 
     def rhythmdetector(self):
         """Detects bradycardia & tachycardia based on threshold input and writes instances to hr DataFrame
-        :param hr: DataFrame with interval heartrate, interval rhythm, and interval time demarcation
         """
 
         bradycount = 0
@@ -46,11 +46,10 @@ class Biomeasure():
             elif self.hr['HeartRate'][x] > self.__thr_tachy:
                 tachycount += 1
                 self.hr.at[x, 'B/T'] = 'Tachycardia Detected'
-            else
+            else:
                 self.hr.at[x, 'B.T'] = 'Healthy... for now'
 
 if __name__ == "__main__":
     hr_measure = Biomeasure()
     hr_measure.change_threshold(0.5)
     hr_measure.thresholdhr()
-
