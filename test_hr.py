@@ -7,6 +7,11 @@ import numpy as np
 
 
 def get_raw_data():
+    """.. function :: get_raw_data()
+
+   Creates dataframe with raw data. 
+
+    """
     times = [x*0.1 for x in range(0, 10*50)]
     voltages = []
     for x in range(0, 10):
@@ -19,6 +24,10 @@ def get_raw_data():
 
 
 def test_thresholdhr_unchanging():
+    """.. function:: test_thresholdhr_unchanging()
+
+    Test that threshold is the same for all chunks of the raw data.
+    """
     raw_data = get_raw_data()
     thr = []
     for x in range(0, 10):
@@ -34,6 +43,10 @@ def test_thresholdhr_unchanging():
 
 
 def get_test_hr1():
+    """.. function:: get_test_hr1()
+
+    Adds heartrate information to dataframe.
+    """
     initial_messages = []
     hrs = []
     for ii in range(0, 10):
@@ -44,6 +57,10 @@ def get_test_hr1():
 
 
 def test_hrdetector():
+    """.. function:: test_hrdetector()
+
+    Test that hrdetector() correctly detects brady/tachycardia.
+    """
     raw_data = get_raw_data()
     updated_data = hrdetector(raw_data)
     test_hr1 = get_test_hr1()

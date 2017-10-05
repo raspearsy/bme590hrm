@@ -69,7 +69,10 @@ Please choose between 0s and {}s\n\n'.format(maxTime))
     stopInd = int(np.floor(stopTime/5))
 
     # Writes the output of the ECG analysis to an output file named ecgOutput.txt
-    with open('ecgOutput.txt', 'w') as ecgResults:
+    filename = "ecgData"
+    filenamestr = "{}_{}to{}.txt".format(filename,startTime,stopTime)
+
+    with open(filenamestr, 'w') as ecgResults:
         instHRStartstr = "Estimated instantaneous heart rate at {}s: {}BPM"\
             .format(startTime, data['HeartRate'][startInd])
         instHRStopstr = "Estimated instaneous heart rate at {}s: {}BPM".format(stopTime, data['HeartRate'][stopInd])

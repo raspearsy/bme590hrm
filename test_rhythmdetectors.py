@@ -6,6 +6,10 @@ import pandas as pd
 
 
 def get_test_hr1():
+    """.. function:: get_test_hr1()
+
+    Create test dataframe.
+    """
     initial_messages = ['Healthy... for now', 'Healthy... for now', 'Healthy... for now']
     test_hr1 = pd.DataFrame({'B/T': initial_messages, 'time': [0, 5, 10], 'HeartRate': [20, 60, 200]})
     return test_hr1
@@ -13,6 +17,10 @@ def get_test_hr1():
 
 # need to identify Garren's bradycardia threshold
 def test_brady():
+    """.. function:: test_brady()
+
+    Test threshold for bradydetector() is 50.
+    """
     test_hr1 = get_test_hr1()
     messages = ['Bradycardia Detected', 'Healthy... for now', 'Healthy... for now']
     hr_b = {'B/T': messages, 'time': [0, 5, 10], 'HeartRate': [20, 60, 200]}
@@ -21,6 +29,10 @@ def test_brady():
 
 # need to identify Garren's tachycardia threshold
 def test_tachy():
+    """.. function:: test_tachy()
+
+    Test threshold for tachydetector() is 140.
+    """
     test_hr1 = get_test_hr1()
     messages = ['Healthy... for now', 'Healthy... for now', 'Tachycardia Detected']
     hr_t = {'B/T': messages, 'time': [0, 5, 10], 'HeartRate': [20, 60, 200]}
