@@ -3,10 +3,13 @@ import numpy as np
 
 
 def summarizeECG(data):
-    """Create txt file summarizing ECG analysis
+    """.. function:: summarizeECG(data)
+    
+    Create txt file summarizing ECG analysis
 
     :param data: pandas dataframe {'Heartrate', 'B\T', 'time'}
-    :return ecgResults.txt
+    :rtype: txt file
+    :return: ecgResults.txt
     """
 
     # Finds the last time point in the data file
@@ -58,7 +61,7 @@ Please choose between 0s and {}s\n\n'.format(maxTime))
         stopTime = maxTime
 
     # Tell user what is happening
-    printStr = "ECG data will be summarized from {}s to {}s'".format(startTime, stopTime)
+    printStr = "ECG data will be summarized from {}s to {}s".format(startTime, stopTime)
     print(printStr)
     
     # Convert user input into indices - data is broken down in the dataframe file in chunks of 5seconds
@@ -66,7 +69,10 @@ Please choose between 0s and {}s\n\n'.format(maxTime))
     stopInd = int(np.floor(stopTime/5))
 
     # Writes the output of the ECG analysis to an output file named ecgOutput.txt
-    with open('ecgOutput.txt', 'w') as ecgResults:
+    filename = "ecgData"
+    filenamestr = "{}_{}to{}.txt".format(filename,startTime,stopTime)
+
+    with open(filenamestr, 'w') as ecgResults:
         instHRStartstr = "Estimated instantaneous heart rate at {}s: {}BPM"\
             .format(startTime, data['HeartRate'][startInd])
         instHRStopstr = "Estimated instaneous heart rate at {}s: {}BPM".format(stopTime, data['HeartRate'][stopInd])
