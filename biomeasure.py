@@ -9,10 +9,10 @@ class Biomeasure():
     """
 
     def __init__(self, threshold=0.9):
-        self.__hr_rawdata = pd.DataFrame(numpy.empty((10, 3))*numpy.nan, columns=['HeartRate', 'B/T', 'time'])
         self.__threshold = threshold
         input = Bioinput()
         self.ecg_file = input.file
+        self.__hr_rawdata = input.read_input()
 
     def thresholdhr(self):
         print(self.__threshold)
