@@ -13,10 +13,10 @@ class Biomeasure:
     """
 
     def __init__(self, threshold=0.9):
-        self.__hr_rawdata = pd.DataFrame(numpy.empty((10, 2))*numpy.nan, columns=['voltage', 'time'])
         self.__threshold = threshold
         inputfile = Bioinput()
         self.ecg_file = inputfile.file
+        self.__hr_rawdata = inputfile.read_input()
 
     def thresholdhr(self):
         """ Will return a list of thresholds, as well as the number of chunks and data_chunk size
@@ -24,8 +24,8 @@ class Biomeasure:
         :return: dataframe with column threshold_hr, and data chunk size and number of chunks for data
         """
 
-        self.__hr_rawdata['voltage'] = list(range(0, 100, 10))
-        self.__hr_rawdata['time'] = list(range(0, 50, 5))
+        #self.__hr_rawdata['voltage'] = list(range(0, 100, 10))
+        #self.__hr_rawdata['time'] = list(range(0, 50, 5))
         time_step = self.__hr_rawdata['time'][2] - self.__hr_rawdata['time'][1]
         data_chunk = int(math.floor((5 / time_step)))
         number_chunks = int(math.floor((len(self.__hr_rawdata) / data_chunk)))
