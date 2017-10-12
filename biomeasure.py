@@ -12,8 +12,12 @@ class Biomeasure:
 
     """
 
-    def __init__(self, threshold=0.9):
+    def __init__(self, threshold=0.9, thr_brady=50, thr_tachy=140):
         self.__threshold = threshold
+        self.__thr_brady = thr_brady
+        self.__thr_tachy = thr_tachy
+        self.hr = hrdetector()
+        pd.DataFrame(numpy.empty((10, 3))*numpy.nan, columns=['HeartRate', 'B/T', 'time'])
         inputfile = Bioinput()
         self.ecg_file = inputfile.file
         self.__hr_rawdata = inputfile.read_input()
@@ -71,6 +75,28 @@ class Biomeasure:
     def change_threshold(self, threshold):
         self.__init__(threshold)
 
+    def change_brady_thresohld(self, brady_threshold):
+        self.__init__(thr_brady=brady_threshold)
+
+    def change_tachy_threshold(self, tachy_threshold):
+        self.__init__(thr_tachy=tachy_threshold)
+
+    def rhythmdetector(self):
+        """Detects bradycardia & tachycardia based on threshold input and writes instances to hr DataFrame
+        """
+
+        bradycount = 0
+        tachycount = 0
+
+        for x in range(0, len(self.hr)):
+            if self.hr['HeartRate'][x] < self.__thr_brady:
+                bradycount += 1
+                self.hr.at[x, 'B/T'] = 'Bradycardia Detected'
+            elif self.hr['HeartRate'][x] > self.__thr_tachy:
+                tachycount += 1
+                self.hr.at[x, 'B/T'] = 'Tachycardia Detected'
+            else:
+                self.hr.at[x, 'B.T'] = 'Healthy... for now'
 
 def main(threshold):
     hr_measure = Biomeasure(threshold)
