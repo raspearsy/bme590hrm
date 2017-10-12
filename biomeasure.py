@@ -16,7 +16,7 @@ class Biomeasure:
         self.__threshold = threshold
         self.__thr_brady = thr_brady
         self.__thr_tachy = thr_tachy
-        self.hr = hrdetector()
+        self.hr = self.hrdetector()
         pd.DataFrame(numpy.empty((10, 3))*numpy.nan, columns=['HeartRate', 'B/T', 'time'])
         inputfile = Bioinput()
         self.ecg_file = inputfile.file
