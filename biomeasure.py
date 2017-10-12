@@ -15,10 +15,11 @@ class Biomeasure:
         self.__threshold = threshold
         self.__thr_brady = thr_brady
         self.__thr_tachy = thr_tachy
-        self.hr = self.hrdetector()
+        #pd.DataFrame(numpy.empty((10, 3))*numpy.nan, columns=['HeartRate', 'B/T', 'time'])
         inputfile = Bioinput()
         self.ecg_file = inputfile.file
         self.__hr_rawdata = inputfile.read_input()
+        #self.hr = self.hrdetector()
 
     def thresholdhr(self):
         """ Will return a list of thresholds, as well as the number of chunks and data_chunk size
@@ -26,6 +27,8 @@ class Biomeasure:
         :return: dataframe with column threshold_hr, and data chunk size and number of chunks for data
         """
 
+        # self.__hr_rawdata['voltage'] = list(range(0, 100, 10))
+        # self.__hr_rawdata['time'] = list(range(0, 50, 5))
         time_step = self.__hr_rawdata['time'][2] - self.__hr_rawdata['time'][1]
         data_chunk = int(math.floor((5 / time_step)))
         number_chunks = int(math.floor((len(self.__hr_rawdata) / data_chunk)))
@@ -100,7 +103,6 @@ def main(threshold):
     # hr_rawdata_new = Bioinput().read_input()
     hr_measure.change_threshold(0.5)
     hr_measure.hrdetector()
-
 
 if __name__ == "__main__":
     main(sys.argv)

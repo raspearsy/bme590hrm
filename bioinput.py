@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 class Bioinput:
     """Input Class
 
