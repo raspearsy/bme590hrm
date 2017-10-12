@@ -8,3 +8,4 @@ class Bioinput():
 
     def read_input(self):
         print("BME590")
+        return 0
