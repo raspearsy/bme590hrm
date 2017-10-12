@@ -11,7 +11,6 @@ class Biomeasure:
     __init__ sets the __hr_rawdata
 
     """
-
     def __init__(self, threshold=0.9, thr_brady=50, thr_tachy=140):
         self.__threshold = threshold
         self.__thr_brady = thr_brady

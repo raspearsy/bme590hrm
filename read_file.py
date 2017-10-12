@@ -3,7 +3,9 @@ import pandas as pd
 
 
 def input_dataframe(file="ecg_data.csv"):
-    """Read in a CSV file and convert it into a DataFrame with the columns being time and voltage"
+    """.. function :: input_dataframe(file="ecg_data.csv")
+    
+    Read in a CSV file and convert it into a DataFrame with the columns being time and voltage"
 
     :param file: A CSV file containing ECG Data with time (s) in the first column and voltage (mV) in the
     second column.

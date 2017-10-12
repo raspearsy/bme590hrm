@@ -6,6 +6,10 @@ import pandas as pd
 
 
 def get_test_hr1():
+    """.. function:: get_test_hr1()
+
+    Create test dataframe.
+    """
     initial_messages = ['Healthy... for now', 'Healthy... for now', 'Healthy... for now']
     test_hr1 = pd.DataFrame({'B/T': initial_messages, 'time': [0, 5, 10], 'HeartRate': [20, 60, 200]})
     return test_hr1
@@ -13,6 +17,10 @@ def get_test_hr1():
 
 # need to identify Garren's bradycardia threshold
 def test_brady():
+    """.. function:: test_brady()
+
+    Test output of bradydetector when threshold is set to 50.
+    """
     test_hr1 = get_test_hr1()
     messages = ['Bradycardia Detected', 'Healthy... for now', 'Healthy... for now']
     hr_b = {'B/T': messages, 'time': [0, 5, 10], 'HeartRate': [20, 60, 200]}
@@ -21,6 +29,10 @@ def test_brady():
 
 # need to identify Garren's tachycardia threshold
 def test_tachy():
+    """.. function:: test_tachy()
+
+    Test output of tachydetector when threshold is set to 140.
+    """
     test_hr1 = get_test_hr1()
     messages = ['Healthy... for now', 'Healthy... for now', 'Tachycardia Detected']
     hr_t = {'B/T': messages, 'time': [0, 5, 10], 'HeartRate': [20, 60, 200]}
@@ -28,6 +40,10 @@ def test_tachy():
 
 
 def test_bradytachy():
+    """.. function:: test_bradytachy()
+
+    Test output of tachy/bradydetector when brady threshold is set to 50 and tachy to 100.
+    """
     test_hr1 = get_test_hr1()
     messages = ['Bradycardia Detected', 'Healthy... for now', 'Tachycardia Detected']
     hr_bt = {'B/T': messages, 'time': [0, 5, 10], 'HeartRate': [20, 60, 200]}
@@ -37,6 +53,10 @@ def test_bradytachy():
 
 # hr_b2 = bradydetector(test_hr1, 0)
 def test_brady2():
+    """.. function:: test_brady2()
+
+    Test bradydetector when threshold is set to 0.
+    """
     test_hr1 = get_test_hr1()
     messages = ['Healthy... for now', 'Healthy... for now', 'Healthy... for now']
     hr_b2 = {'B/T': messages, 'time': [0, 5, 10], 'HeartRate': [20, 60, 200]}
@@ -45,6 +65,10 @@ def test_brady2():
 
 # hr_t2 = tachydetector(test_hr1, 1000)
 def test_tachy2():
+    """.. function:: test_tachy2()
+
+    Test tachydetector when threshold is set to 1000.
+    """
     test_hr1 = get_test_hr1()
     messages = ['Healthy... for now', 'Healthy... for now', 'Healthy... for now']
     hr_t2 = {'B/T': messages, 'time': [0, 5, 10], 'HeartRate': [20, 60, 200]}
