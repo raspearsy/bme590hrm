@@ -16,8 +16,7 @@ class Biomeasure:
         self.__thr_brady = thr_brady
         self.__thr_tachy = thr_tachy
         inputfile = Bioinput()
-        self.ecg_file = inputfile.file
-        self.__hr_rawdata = inputfile.read_input()
+        self.__hr_rawdata = inputfile.ecg_dataframe
 
     def thresholdhr(self):
         """ Will return a list of thresholds, as well as the number of chunks and data_chunk size
@@ -94,11 +93,12 @@ class Biomeasure:
         print(hr)
 
 
-def main(threshold):
-    hr_measure = Biomeasure(threshold)
+def main(argv):
+    hr_measure = Biomeasure()
     hr_measure.change_threshold(0.9)
     hr = hr_measure.hrdetector()
     hr_measure.rhythmdetector(hr)
 
 if __name__ == "__main__":
-    main(sys.argv)
+    main(sys.argv[1:])
+
