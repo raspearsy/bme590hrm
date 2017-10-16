@@ -1,11 +1,12 @@
 import pandas as pd
 import numpy
 import math
-from bioinput import Bioinput
+from ecginput import ECGInput
+from ecgoutput import ECGOutput
 import sys
 
 
-class BioMeasure:
+class ECGMeasure:
     """ This is the main calling class
     __init__ sets the __hr_rawdata
     """
@@ -13,7 +14,7 @@ class BioMeasure:
         self.__threshold = threshold
         self.__thr_brady = thr_brady
         self.__thr_tachy = thr_tachy
-        inputfile = Bioinput()
+        inputfile = ECGInput("ecg_data.csv")
         self.__hr_rawdata = inputfile.ecg_dataframe
         self.__data = self.thresholdhr()
 
@@ -87,14 +88,17 @@ class BioMeasure:
             else:
                 hr.at[x, 'B/T'] = 'Healthy... for now'
         print(hr)
+        return hr
 
 
 def main(argv):
-    hr_measure = BioMeasure()
+    hr_measure = ECGMeasure()
     hr_measure.change_threshold(0.9)
     hr_measure.change_tachy_threshold(120)
     hr = hr_measure.hrdetector()
-    hr_measure.detect_rhythm(hr)
+    hr_final = hr_measure.detect_rhythm(hr)
+    hr_output = ECGOutput(hr_final)
+    hr_output.write_ecg()
 
 if __name__ == "__main__":
     main(sys.argv[1:])
