@@ -1,5 +1,4 @@
-from hr_measure import thresholdhr
-from hr_measure import hrdetector
+from biomeasure import BioMeasure
 import pandas as pd
 import numpy as np
 # need to test what happens when have too little data to create a chunk
@@ -28,14 +27,18 @@ def test_thresholdhr_unchanging():
 
     Test that threshold is the same for all chunks of the raw data.
     """
-    raw_data = get_raw_data()
     thr = []
     for x in range(0, 10):
         thr.append(0.9*25)
     thresholds = np.array(thr)
     chunk = 50
     num_chunks = 10
-    [t, c, n] = thresholdhr(raw_data)
+
+    raw_data = get_raw_data()
+    biomeasure = BioMeasure()
+    biomeasure.__hr_rawdata = raw_data
+
+    [t, c, n] = biomeasure.thresholdhr()
     t_list = t.values.T.tolist()[0]
     assert (t_list == thresholds).all()
     assert c == chunk
@@ -62,6 +65,10 @@ def test_hrdetector():
     Test that hrdetector() correctly detects brady/tachycardia.
     """
     raw_data = get_raw_data()
-    updated_data = hrdetector(raw_data)
+    biomeasure = BioMeasure()
+    biomeasure.__raw_data = raw_data
+
     test_hr1 = get_test_hr1()
+    updated_data = biomeasure.hrdetector()
+
     assert (updated_data['B/T'] == test_hr1['B/T']).all()
