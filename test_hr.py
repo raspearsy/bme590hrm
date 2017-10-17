@@ -1,5 +1,4 @@
-from hr_measure import thresholdhr
-from hr_measure import hrdetector
+from ecgmeasure import ECGMeasure
 import pandas as pd
 import numpy as np
 # need to test what happens when have too little data to create a chunk
@@ -9,7 +8,7 @@ import numpy as np
 def get_raw_data():
     """.. function :: get_raw_data()
 
-   Creates dataframe with raw data. 
+   Creates dataframe with raw data.
 
     """
     times = [x*0.1 for x in range(0, 10*50)]
@@ -28,14 +27,18 @@ def test_thresholdhr_unchanging():
 
     Test that threshold is the same for all chunks of the raw data.
     """
-    raw_data = get_raw_data()
     thr = []
     for x in range(0, 10):
         thr.append(0.9*25)
     thresholds = np.array(thr)
     chunk = 50
     num_chunks = 10
-    [t, c, n] = thresholdhr(raw_data)
+
+    biomeasure = ECGMeasure()
+    biomeasure.__hr_rawdata = get_raw_data()
+    biomeasure.thresholdhr()
+    [t, c, n] = biomeasure.data
+
     t_list = t.values.T.tolist()[0]
     assert (t_list == thresholds).all()
     assert c == chunk
@@ -61,7 +64,9 @@ def test_hrdetector():
 
     Test that hrdetector() correctly detects brady/tachycardia.
     """
-    raw_data = get_raw_data()
-    updated_data = hrdetector(raw_data)
+    biomeasure = ECGMeasure()
+    biomeasure.__raw_data = get_raw_data()
     test_hr1 = get_test_hr1()
-    assert (updated_data['B/T'] == test_hr1['B/T']).all()
+    biomeasure.hrdetector()
+
+    assert (biomeasure.data['B/T'] == test_hr1['B/T']).all()

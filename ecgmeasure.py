@@ -140,5 +140,6 @@ def main(arguments):
         hr_output = ECGOutput(hr_measure.data, hr_measure.file)
         hr_output.write_ecg()
 
+
 if __name__ == "__main__":
     main(sys.argv[1:])
