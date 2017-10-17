@@ -21,7 +21,7 @@ def test_detect_rhythm_brady():
     """
     bm_b = ECGMeasure()
     hr_b = get_test_hr1()
-    bm_b.detect_rhythm(hr_b)
+    bm_b.detect_rhythm()
 
     output_messages = ['Bradycardia Detected', 'Healthy... for now', 'Healthy... for now']
     output_hr = {'B/T': output_messages, 'time': [0, 5, 10], 'HeartRate': [20, 60, 60]}
@@ -34,15 +34,15 @@ def test_detect_rhythm_brady2():
 
     Test bradydetector when threshold is set to 100.
     """
-    bm_b3 = ECGMeasure()
-    hr_b3 = get_test_hr1()
-    bm_b3.change_brady_threshold(brady_threshold=100)
-    bm_b3.detect_rhythm(hr_b3)
+    bm_b2 = ECGMeasure()
+    hr_b2 = get_test_hr1()
+    bm_b2.change_brady_threshold(brady_threshold=100)
+    bm_b2.detect_rhythm()
 
     output_messages = ['Bradycardia Detected', 'Bradycardia Detected', 'Bradycardia Detected']
     output_hr = {'B/T': output_messages, 'time': [0, 5, 10], 'HeartRate': [20, 60, 60]}
 
-    assert (hr_b3 == output_hr)
+    assert (hr_b2 == output_hr)
 
 
 def test_detect_rhythm_brady3():
@@ -50,15 +50,15 @@ def test_detect_rhythm_brady3():
 
     Test bradydetector when threshold is set to 100.
     """
-    bm_b2 = ECGMeasure()
-    hr_b2 = get_test_hr1()
-    bm_b2.change_brady_threshold(brady_threshold=0)
-    bm_b2.detect_rhythm(hr_b2)
+    bm_b3 = ECGMeasure()
+    hr_b3 = get_test_hr1()
+    bm_b3.change_brady_threshold(brady_threshold=0)
+    bm_b3.detect_rhythm()
 
     output_messages = ['Healthy... for now', 'Healthy... for now', 'Healthy... for now']
     output_hr = {'B/T': output_messages, 'time': [0, 5, 10], 'HeartRate': [20, 60, 60]}
 
-    assert (hr_b2 == output_hr)
+    assert (hr_b3 == output_hr)
 
 
 def test_detect_rhythm_tachy():
@@ -68,7 +68,7 @@ def test_detect_rhythm_tachy():
     """
     bm_t = ECGMeasure()
     hr_t = get_test_hr1()
-    bm_t.detect_rhythm(hr_t)
+    bm_t.detect_rhythm()
 
     output_messages = ['Healthy... for now', 'Healthy... for now', 'Tachycardia Detected']
     output_hr = {'B/T': output_messages, 'time': [0, 5, 10], 'HeartRate': [60, 60, 200]}
@@ -84,7 +84,7 @@ def test_detect_rhythm_tachy2():
     bm_t2 = ECGMeasure()
     hr_t2 = get_test_hr1()
     bm_t2.change_tachy_threshold(tachy_threshold=1000)
-    bm_t2.detect_rhythm(hr_t2)
+    bm_t2.detect_rhythm()
 
     output_messages = ['Healthy... for now', 'Healthy... for now', 'Healthy... for now']
     output_hr = {'B/T': output_messages, 'time': [0, 5, 10], 'HeartRate': [20, 60, 60]}
@@ -100,7 +100,7 @@ def test_detect_rhythm_tachy3():
     bm_t3 = ECGMeasure()
     hr_t3 = get_test_hr1()
     bm_t3.change_tachy_threshold(tachy_threshold=0)
-    bm_t3.detect_rhythm(hr_t3)
+    bm_t3.detect_rhythm()
 
     output_messages = ['Tachycardia Detected', 'Tachycardia Detected', 'Tachycardia Detected']
     output_hr = {'B/T': output_messages, 'time': [0, 5, 10], 'HeartRate': [20, 60, 60]}

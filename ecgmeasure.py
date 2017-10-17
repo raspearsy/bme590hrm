@@ -11,7 +11,7 @@ class ECGMeasure:
     __init__ sets the __hr_rawdata
     """
 
-    def __init__(self, argument, threshold=0.9, thr_brady=50, thr_tachy=140):
+    def __init__(self, argument="ecg_data.csv", threshold=0.9, thr_brady=50, thr_tachy=140):
         """.. function:: __init__(self, threshold=0.9, thr_brady=50, thr_tachy=140)
 
         :param threshold: specifies a heart beat
