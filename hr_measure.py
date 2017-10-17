@@ -74,8 +74,8 @@ def bradydetector(hr, hr_threshold_brady):
     
     Detects bradycardia based on threshold input
     
-    :param hr:
-    :param hr_threshold_brady:
+    :param hr: list of Heart Rates
+    :param hr_threshold_brady: threshold HR for detection of bradycardia
     :returns: Number of instances of Bradycardia, time stamp for Bradycardia, return HR list with added colomns
     """
 
@@ -95,7 +95,7 @@ def tachydetector(hr, hr_threshold_tachy):
     detects tachycardia
 
     :param hr: list of Heart Rates
-    :param hr_threshold_tachy: threshold HR for detection
+    :param hr_threshold_tachy: threshold HR for detection tachycardia
     :return: Number of instances of Bradycardia, time stamp for Bradycardia, return HR list with added colomns
     """
 
