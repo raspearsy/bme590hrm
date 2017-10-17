@@ -10,17 +10,29 @@ class ECGMeasure:
     """ This is the main calling class
     __init__ sets the __hr_rawdata
     """
-    def __init__(self, threshold=0.8, thr_brady=50, thr_tachy=140):
+
+    def __init__(self, argument, threshold=0.9, thr_brady=50, thr_tachy=140):
+        """.. function:: __init__(self, threshold=0.9, thr_brady=50, thr_tachy=140)
+
+        :param threshold: specifies a heart beat
+        :param thr_brady: indicates whether Bradycardia is detected
+        :param thr_tachy: indicates whether Tachycardia is detected
+        """
+
         self.__threshold = threshold
         self.__thr_brady = thr_brady
         self.__thr_tachy = thr_tachy
-        inputfile = ECGInput("ecg_data.csv")
+        inputfile = ECGInput(argument)
+        self.file = inputfile.file
         self.__hr_rawdata = inputfile.ecg_dataframe
-        self.__data = self.thresholdhr()
+        self.data = None
 
     def thresholdhr(self):
-        """ Will return a list of thresholds, as well as the number of chunks and data_chunk size
-        :return: dataframe with column threshold_hr, and data chunk size and number of chunks for data
+        """ .. function:: thresholdhr(self)
+
+        Will return a list of thresholds, as well as the number of chunks and data_chunk size
+
+        :param: self: instance of the ECGMeasure class
         """
 
         # self.__hr_rawdata['voltage'] = list(range(0, 100, 10))
@@ -35,17 +47,21 @@ class ECGMeasure:
             maxhr_data = max(self.__hr_rawdata['voltage'][(j * data_chunk):(j * data_chunk) + data_chunk])
             threshold_hr[j] = self.__threshold * maxhr_data
         threshold_hr = pd.DataFrame(numpy.array(threshold_hr), columns=['Threshold'])
-        return [threshold_hr, data_chunk, number_chunks]
+        self.data = [threshold_hr, data_chunk, number_chunks]
 
     def hrdetector(self):
-        """Use threshold detection to specify a heart beat (QRS height) and estimate both instantaneous and hr over delta_t
-        :param
+        """.. function:: hrdetector(self)
+
+        Use threshold detection to specify a heart beat (QRS height) and estimate both instantaneous and hr over delta_t
+
+        :param self: instance of ECGMeasure class
         """
         # delta_t = input('Enter how long you would like to average your heart rate over (in s): ')
         # Use delta_t, average the HR over that time
         # for i in hr_rawdata[1], find minimum and max locally, threshold on that (using a timing fxn)
         # Calls thresholdhr every so often
-        [thresholds, data_chunk, number_chunks] = self.__data
+        self.thresholdhr()
+        [thresholds, data_chunk, number_chunks] = self.data
         columns = ['HeartRate', 'B/T', 'time']
         hr = pd.DataFrame(numpy.empty(((len(thresholds)), 3)), columns=columns)
         hr['HeartRate'] = None
@@ -59,46 +75,70 @@ class ECGMeasure:
                         (self.__hr_rawdata['voltage'][(i * (j + 1)) - 1] < thresholds['Threshold'][j]):
                     hb_count[j] = hb_count[j] + 1
             hr.at[j, 'HeartRate'] = (hb_count[j] / 5) * 60
-        return hr
+        print(hr)
+        self.data = hr
 
     def change_threshold(self, threshold):
+        """.. function:: change_threshold(self, threshold)
+
+        Change the threshold that specifies a heart beat
+
+        :param self: instance of ECGMeasure class
+        :param threshold: new value that threshold will be changed to
+        """
         self.__threshold = threshold
         # self.__init__(threshold)
 
     def change_brady_threshold(self, brady_threshold):
+        """.. function:: change_brady_threshold(self, brady_threshold)
+
+        Change the threshold that indicates whether Bradycardia is detected
+
+        :param self: instance of ECGMeasure class
+        :param brady_threshold: new value that the brady threshold will be changed to
+        """
         self.__thr_brady = brady_threshold
 
     def change_tachy_threshold(self, tachy_threshold):
+        """.. function:: change_tachy_threshold(self, tachy_threshold)
+
+        Change the threshold that indicates whether Tachycardia is detected
+
+        :param self: instance of ECGMeasure class
+        :param tachy_threshold: new value that the tachy threshold will be changed to
+        """
         self.__thr_tachy = tachy_threshold
 
+    def detect_rhythm(self):
+        """.. function:: detect_rhythm(self, hr)
 
-    def detect_rhythm(self, hr):
-        """Detects bradycardia & tachycardia based on threshold input and writes instances to hr DataFrame
+        Detects bradycardia & tachycardia based on threshold input and writes instances to hr DataFrame
+
+        :param self: instance of ECGMeasure class
         """
 
         bradycount = 0
         tachycount = 0
-        for x in range(0, len(hr)):
-            if hr['HeartRate'][x] < self.__thr_brady:
+        for x in range(0, len(self.data)):
+            if self.data['HeartRate'][x] < self.__thr_brady:
                 bradycount += 1
-                hr.at[x, 'B/T'] = 'Bradycardia Detected'
-            elif hr['HeartRate'][x] > self.__thr_tachy:
+                self.data.at[x, 'B/T'] = 'Bradycardia Detected'
+            elif self.data['HeartRate'][x] > self.__thr_tachy:
                 tachycount += 1
-                hr.at[x, 'B/T'] = 'Tachycardia Detected'
+                self.data.at[x, 'B/T'] = 'Tachycardia Detected'
             else:
-                hr.at[x, 'B/T'] = 'Healthy... for now'
-        print(hr)
-        return hr
+                self.data.at[x, 'B/T'] = 'Healthy... for now'
 
 
-def main(argv):
-    hr_measure = ECGMeasure()
-    hr_measure.change_threshold(0.9)
-    hr_measure.change_tachy_threshold(120)
-    hr = hr_measure.hrdetector()
-    hr_final = hr_measure.detect_rhythm(hr)
-    hr_output = ECGOutput(hr_final)
-    hr_output.write_ecg()
+def main(arguments):
+    for argument in arguments:
+        hr_measure = ECGMeasure(argument)
+        hr_measure.change_threshold(0.9)
+        hr_measure.change_tachy_threshold(120)
+        hr_measure.hrdetector()
+        hr_measure.detect_rhythm()
+        hr_output = ECGOutput(hr_measure.data, hr_measure.file)
+        hr_output.write_ecg()
 
 if __name__ == "__main__":
     main(sys.argv[1:])

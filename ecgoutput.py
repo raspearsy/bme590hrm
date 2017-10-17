@@ -4,17 +4,24 @@ import numpy as np
 
 class ECGOutput:
     """Output Class
-
+    Outputs a text file containing the final heart rate data over a specified period of time
     """
 
-    def __init__(self, hr_data3):
-        self.data = hr_data3
+    def __init__(self, hr_data, file):
+        """.. function:: __init__(self, hr_data, file_name)
+
+        :param hr_data: final hr_data from ECGMeasure that needs to be written to a text file
+        :param file: name of the input file so a corresponding output file name can be derived
+        """
+        self.data = hr_data
+        self.file = file
 
     def write_ecg(self):
-        """Create txt file summarizing ECG analysis
+        """.. function:: write_ecg(self)
 
-        :param self: class containing data in the format of a pandas dataframe {'Heartrate', 'B\T', 'time'}
-        :return ecgResults.txt
+        Create txt file summarizing ECG analysis
+
+        :param self: instance of ECGOutput class
         """
 
         # Finds the last time point in the data file
@@ -25,7 +32,7 @@ class ECGOutput:
         Data recorded from 0s to {}s.
         Enter a start and stop time in that range to get an instantaneous 
         heart rate at those times, an average rate over that period, 
-        and any bradycardia or tachycardia events between those times.".format(maxTime))"""
+        and any bradycardia or tachycardia events between those times.""".format(max_time)
         print(print_str)
 
         # Error messages for possible errors
@@ -57,7 +64,7 @@ class ECGOutput:
             try:
                 stop_time = int(input(stop_time_str))
             except ValueError:
-                print(errmsg_notint)
+                print(err_msg_not_int)
                 continue
             else:
                 break
@@ -70,18 +77,18 @@ class ECGOutput:
         print_str = "ECG data will be summarized from {}s to {}s'".format(start_time, stop_time)
         print(print_str)
 
-        # Convert user input into indices - data is broken down in the dataframe file in chunks of 5seconds
+        # Convert user input into indices - data is broken down in the dataframe file in chunks of 5 seconds
         start_ind = int(np.floor(start_time / 5))
         stop_ind = int(np.floor(stop_time / 5))
 
         # Writes the output of the ECG analysis to an output file named ecgOutput.txt
-        with open('ecgoutput.txt', 'w') as ecg_results:
-            inst_hr_start_str = "Estimated instantaneous heart rate at {}s: {}BPM" \
+        with open("{}_{}_{}.txt".format(self.file[:-4], start_time, stop_time), 'w') as ecg_results:
+            inst_hr_start_str = "Estimated instantaneous heart rate at {}s: {} BPM" \
                 .format(start_time, self.data['HeartRate'][start_ind])
-            inst_hr_stop_str = "Estimated instantaneous heart rate at {}s: {}BPM"\
+            inst_hr_stop_str = "Estimated instantaneous heart rate at {}s: {} BPM"\
                 .format(stop_time, self.data['HeartRate'][stop_ind])
             avg_hr = self.data['HeartRate'][start_ind:stop_ind].mean()
-            avg_hr_str = "Estimated average heart rate from {}s to {}s: {}BPM".format(start_time, stop_time, avg_hr)
+            avg_hr_str = "Estimated average heart rate from {}s to {}s: {} BPM".format(start_time, stop_time, avg_hr)
 
             brady_times = []
             tachy_times = []
