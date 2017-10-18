@@ -34,17 +34,13 @@ def test_thresholdhr_unchanging():
     chunk = 50
     num_chunks = 10
 
-    biomeasure = ECGMeasure()
-    biomeasure.__hr_rawdata = get_raw_data()
-    print(biomeasure.__hr_rawdata)
+    biomeasure = ECGMeasure(argument="test_hr.csv")
+    # biomeasure.__hr_rawdata = get_raw_data()
+    #print(biomeasure.__hr_rawdata)
     biomeasure.thresholdhr()
-    print(biomeasure.data)
     [t, c, n] = biomeasure.data
 
     t_list = t.values.T.tolist()[0]
-
-    print(t_list)
-    print(thresholds)
 
     assert (t_list == thresholds).all()
     assert c == chunk
@@ -70,9 +66,11 @@ def test_hrdetector():
 
     Test that hrdetector() correctly detects brady/tachycardia.
     """
-    biomeasure = ECGMeasure()
-    biomeasure.__raw_data = get_raw_data()
+    biomeasure = ECGMeasure(argument="test_hr.csv")
+    # biomeasure.__raw_data = get_raw_data()
     test_hr1 = get_test_hr1()
     biomeasure.hrdetector()
+    biomeasure.detect_rhythm()
 
+    assert (biomeasure.data['HeartRate'] == test_hr1['HeartRate']).all()
     assert (biomeasure.data['B/T'] == test_hr1['B/T']).all()
