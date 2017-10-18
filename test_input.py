@@ -37,7 +37,7 @@ def test_exception_nofile():
 
     """
     try:
-        ecg_nofile = ECGInput(file="")
+        ECGInput(file="")
         assert False
     except FileNotFoundError:
         assert True
@@ -63,7 +63,7 @@ def test_exception_empty_file():
     Test if dataframe is empty.
     """
     try:
-        ecg_empty = ECGInput("test_data_empty.csv")
+        ECGInput("test_data_empty.csv")
         assert False
     except Exception as e:
         assert str(e) == "No data found"

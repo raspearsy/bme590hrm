@@ -56,7 +56,7 @@ def get_test_hr1():
     hrs = []
     for ii in range(0, 10):
         hrs.append(1/5*60)
-        initial_messages.append('Healthy... for now')
+        initial_messages.append('Bradycardia Detected')
     test_hr1 = pd.DataFrame({'HeartRate': hrs, 'B/T': initial_messages, 'time': list(range(0, 50, 5))})
     return test_hr1
 

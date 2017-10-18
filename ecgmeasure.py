@@ -72,8 +72,8 @@ class ECGMeasure:
 
         for j in range(0, len(thresholds)):
             for i in range(1, data_chunk):
-                if (self.__hr_rawdata['voltage'][i * (j + 1)] > thresholds['Threshold'][j]) and \
-                        (self.__hr_rawdata['voltage'][(i * (j + 1)) - 1] < thresholds['Threshold'][j]):
+                if (self.__hr_rawdata['voltage'][i + (j * data_chunk)] > thresholds['Threshold'][j]) and \
+                        (self.__hr_rawdata['voltage'][(i + (j * data_chunk) - 1)] < thresholds['Threshold'][j]):
                     hb_count[j] = hb_count[j] + 1
             hr.at[j, 'HeartRate'] = (hb_count[j] / 5) * 60
         print(hr)
