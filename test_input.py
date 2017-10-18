@@ -55,11 +55,11 @@ def test_exception_nonnumeric_values():
     except ValueError:
         assert True
 
+
 def test_exception_empty_file():
     """.. function:: test_exception_empty_file()
 
     Test if dataframe is empty.
     """
     ecg_empty = ECGInput("test_data_empty.csv")
-
     assert len(ecg_empty.ecg_dataframe) == 0

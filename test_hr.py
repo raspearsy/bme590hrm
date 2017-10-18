@@ -36,10 +36,16 @@ def test_thresholdhr_unchanging():
 
     biomeasure = ECGMeasure()
     biomeasure.__hr_rawdata = get_raw_data()
+    print(biomeasure.__hr_rawdata)
     biomeasure.thresholdhr()
+    print(biomeasure.data)
     [t, c, n] = biomeasure.data
 
     t_list = t.values.T.tolist()[0]
+
+    print(t_list)
+    print(thresholds)
+
     assert (t_list == thresholds).all()
     assert c == chunk
     assert n == num_chunks
