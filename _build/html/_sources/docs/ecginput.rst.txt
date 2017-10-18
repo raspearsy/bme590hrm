@@ -1,5 +1,7 @@
+ecginput module
+===============
 
-.. automodule:: test_hr
+.. automodule:: ecginput
     :members:
     :undoc-members:
     :show-inheritance:

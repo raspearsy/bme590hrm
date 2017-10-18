@@ -11,9 +11,10 @@ class ECGMeasure:
     __init__ sets the __hr_rawdata
     """
 
-    def __init__(self, argument, threshold=0.9, thr_brady=50, thr_tachy=140):
+    def __init__(self, argument="ecg_data.csv", threshold=0.9, thr_brady=50, thr_tachy=140):
         """.. function:: __init__(self, threshold=0.9, thr_brady=50, thr_tachy=140)
 
+        :param argument: specifies the input file name
         :param threshold: specifies a heart beat
         :param thr_brady: indicates whether Bradycardia is detected
         :param thr_tachy: indicates whether Tachycardia is detected
@@ -22,7 +23,7 @@ class ECGMeasure:
         self.__threshold = threshold
         self.__thr_brady = thr_brady
         self.__thr_tachy = thr_tachy
-        inputfile = ECGInput(argument)
+        inputfile = ECGInput(file=argument)
         self.file = inputfile.file
         self.__hr_rawdata = inputfile.ecg_dataframe
         self.data = None
@@ -71,8 +72,8 @@ class ECGMeasure:
 
         for j in range(0, len(thresholds)):
             for i in range(1, data_chunk):
-                if (self.__hr_rawdata['voltage'][i * (j + 1)] > thresholds['Threshold'][j]) and \
-                        (self.__hr_rawdata['voltage'][(i * (j + 1)) - 1] < thresholds['Threshold'][j]):
+                if (self.__hr_rawdata['voltage'][i + (j * data_chunk)] > thresholds['Threshold'][j]) and \
+                        (self.__hr_rawdata['voltage'][(i + (j * data_chunk) - 1)] < thresholds['Threshold'][j]):
                     hb_count[j] = hb_count[j] + 1
             hr.at[j, 'HeartRate'] = (hb_count[j] / 5) * 60
         print(hr)
@@ -139,6 +140,7 @@ def main(arguments):
         hr_measure.detect_rhythm()
         hr_output = ECGOutput(hr_measure.data, hr_measure.file)
         hr_output.write_ecg()
+
 
 if __name__ == "__main__":
     main(sys.argv[1:])

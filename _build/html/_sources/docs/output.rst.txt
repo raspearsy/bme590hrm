@@ -1,5 +1,7 @@
+output module
+=============
 
-.. automodule:: test_hr
+.. automodule:: output
     :members:
     :undoc-members:
     :show-inheritance:

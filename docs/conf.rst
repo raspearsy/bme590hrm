@@ -1,5 +1,7 @@
+conf module
+===========
 
-.. automodule:: test_hr
+.. automodule:: conf
     :members:
     :undoc-members:
     :show-inheritance:
