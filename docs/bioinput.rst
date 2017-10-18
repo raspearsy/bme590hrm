@@ -1,5 +1,7 @@
+bioinput module
+===============
 
-.. automodule:: test_hr
+.. automodule:: bioinput
     :members:
     :undoc-members:
     :show-inheritance:
