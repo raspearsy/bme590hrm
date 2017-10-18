@@ -26,9 +26,7 @@ def test_detect_rhythm_brady():
     output_messages = ['Bradycardia Detected', 'Healthy... for now', 'Healthy... for now']
     output_hr = {'B/T': output_messages, 'time': [0, 5, 10], 'HeartRate': [20, 60, 60]}
 
-    assert (bm_b.data['B/T'][0] == output_hr['B/T'][0])
-    assert (bm_b.data['B/T'][1] == output_hr['B/T'][1])
-    assert (bm_b.data['B/T'][2] == output_hr['B/T'][2])
+    assert (bm_b.data['B/T'] == output_hr['B/T']).all()
 
 
 def test_detect_rhythm_brady2():
@@ -44,9 +42,7 @@ def test_detect_rhythm_brady2():
     output_messages = ['Bradycardia Detected', 'Bradycardia Detected', 'Bradycardia Detected']
     output_hr = {'B/T': output_messages, 'time': [0, 5, 10], 'HeartRate': [60, 60, 60]}
 
-    assert (bm_b2.data['B/T'][0] == output_hr['B/T'][0])
-    assert (bm_b2.data['B/T'][1] == output_hr['B/T'][1])
-    assert (bm_b2.data['B/T'][2] == output_hr['B/T'][2])
+    assert (bm_b2.data['B/T'] == output_hr['B/T']).all()
 
 
 def test_detect_rhythm_brady3():
@@ -62,9 +58,7 @@ def test_detect_rhythm_brady3():
     output_messages = ['Healthy... for now', 'Healthy... for now', 'Healthy... for now']
     output_hr = {'B/T': output_messages, 'time': [0, 5, 10], 'HeartRate': [60, 60, 60]}
 
-    assert (bm_b3.data['B/T'][0] == output_hr['B/T'][0])
-    assert (bm_b3.data['B/T'][1] == output_hr['B/T'][1])
-    assert (bm_b3.data['B/T'][2] == output_hr['B/T'][2])
+    assert (bm_b3.data['B/T'] == output_hr['B/T']).all()
 
 
 def test_detect_rhythm_tachy():
@@ -79,9 +73,7 @@ def test_detect_rhythm_tachy():
     output_messages = ['Healthy... for now', 'Healthy... for now', 'Tachycardia Detected']
     output_hr = {'B/T': output_messages, 'time': [0, 5, 10], 'HeartRate': [60, 60, 200]}
 
-    assert (bm_t.data['B/T'][0] == output_hr['B/T'][0])
-    assert (bm_t.data['B/T'][1] == output_hr['B/T'][1])
-    assert (bm_t.data['B/T'][2] == output_hr['B/T'][2])
+    assert (bm_t.data['B/T'] == output_hr['B/T']).all()
 
 
 def test_detect_rhythm_tachy2():
@@ -97,9 +89,7 @@ def test_detect_rhythm_tachy2():
     output_messages = ['Healthy... for now', 'Healthy... for now', 'Healthy... for now']
     output_hr = {'B/T': output_messages, 'time': [0, 5, 10], 'HeartRate': [60, 60, 60]}
 
-    assert (bm_t2.data['B/T'][0] == output_hr['B/T'][0])
-    assert (bm_t2.data['B/T'][1] == output_hr['B/T'][1])
-    assert (bm_t2.data['B/T'][2] == output_hr['B/T'][2])
+    assert (bm_t2.data['B/T'] == output_hr['B/T']).all()
 
 
 def test_detect_rhythm_tachy3():
@@ -115,9 +105,7 @@ def test_detect_rhythm_tachy3():
     output_messages = ['Tachycardia Detected', 'Tachycardia Detected', 'Tachycardia Detected']
     output_hr = {'B/T': output_messages, 'time': [0, 5, 10], 'HeartRate': [60, 60, 60]}
 
-    assert (bm_t3.data['B/T'][0] == output_hr['B/T'][0])
-    assert (bm_t3.data['B/T'][1] == output_hr['B/T'][1])
-    assert (bm_t3.data['B/T'][2] == output_hr['B/T'][2])
+    assert (bm_t3.data['B/T'] == output_hr['B/T']).all()
 
 
 def test_detect_rhythm_bradytachy():
@@ -132,6 +120,4 @@ def test_detect_rhythm_bradytachy():
     output_messages = ['Bradycardia Detected', 'Healthy... for now', 'Tachycardia Detected']
     output_hr = {'B/T': output_messages, 'time': [0, 5, 10], 'HeartRate': [20, 60, 200]}
 
-    assert (bm_bt.data['B/T'][0] == output_hr['B/T'][0])
-    assert (bm_bt.data['B/T'][1] == output_hr['B/T'][1])
-    assert (bm_bt.data['B/T'][2] == output_hr['B/T'][2])
+    assert (bm_bt.data['B/T'] == output_hr['B/T']).all()
