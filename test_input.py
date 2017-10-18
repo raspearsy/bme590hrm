@@ -12,7 +12,8 @@ def test_ecg_dataframe_size():
 
     """
     ecg_input = ECGInput(file="testfile1.csv")
-    assert ecg_input.ecg_dataframe.shape[1] == 2
+    print(ecg_input.ecg_dataframe)
+    assert ecg_input.ecg_dataframe.shape[1] == 3
 
 
 def test_ecg_dataframe_type():
@@ -52,8 +53,8 @@ def test_exception_nonnumeric_values():
         pd.to_numeric(ecg_nonnumeric_dataframe.ecg_dataframe['time'])
         pd.to_numeric(ecg_nonnumeric_dataframe.ecg_dataframe['voltage'])
         assert False
-    except ValueError:
-        assert True
+    except Exception as e:
+        assert str(e) == "No valid data found"
 
 
 def test_exception_empty_file():
@@ -61,5 +62,8 @@ def test_exception_empty_file():
 
     Test if dataframe is empty.
     """
-    ecg_empty = ECGInput("test_data_empty.csv")
-    assert len(ecg_empty.ecg_dataframe) == 0
+    try:
+        ecg_empty = ECGInput("test_data_empty.csv")
+        assert False
+    except Exception as e:
+        assert str(e) == "No data found"
