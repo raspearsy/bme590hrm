@@ -11,7 +11,10 @@ from output import summarizeECG
 
 
 def thresholdhr(hr_rawdata):
-    """Will create a threshold array (in mV) on which to return the heart rate
+    """.. function:: thresholdhr(hr_rawdata)
+    
+    Will create a threshold array (in mV) on which to return the heart rate
+    
     :param hr_rawdata: raw data input (time first column, voltage second column)
     :return: will return a dataframe of numbers for thresholding whether a heart beat has occured
     """
@@ -35,7 +38,10 @@ def thresholdhr(hr_rawdata):
 
 
 def hrdetector(hr_rawdata):
-    """Use threshold detection to specify a heart beat (QRS height) and estimate both instanteous and hr over delta_t
+    """.. function :: hrdetector(hr_rawdata)
+    
+    Use threshold detection to specify a heart beat (QRS height) and estimate both instanteous and hr over delta_t
+    
     :param hr_rawdata: raw data (after minor I/O filtering)
     """
     # delta_t = input('Enter how long you would like to average your heart rate over (in s): ')
@@ -64,9 +70,12 @@ def hrdetector(hr_rawdata):
 
 
 def bradydetector(hr, hr_threshold_brady):
-    """Detects bradycardia based on threshold input
-    :param hr:
-    :param hr_threshold_brady:
+    """.. function :: bradydetector(hr, hr_threshold_brady)
+    
+    Detects bradycardia based on threshold input
+    
+    :param hr: list of Heart Rates
+    :param hr_threshold_brady: threshold HR for detection of bradycardia
     :returns: Number of instances of Bradycardia, time stamp for Bradycardia, return HR list with added colomns
     """
 
@@ -81,10 +90,12 @@ def bradydetector(hr, hr_threshold_brady):
 
 
 def tachydetector(hr, hr_threshold_tachy):
-    """detects tachycardia
+    """.. function :: tachydetector(hr, hr_threshold_tachy)
+    
+    detects tachycardia
 
     :param hr: list of Heart Rates
-    :param hr_threshold_tachy: threshold HR for detection
+    :param hr_threshold_tachy: threshold HR for detection tachycardia
     :return: Number of instances of Bradycardia, time stamp for Bradycardia, return HR list with added colomns
     """
 
