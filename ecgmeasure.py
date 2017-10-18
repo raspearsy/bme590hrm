@@ -14,6 +14,7 @@ class ECGMeasure:
     def __init__(self, argument="ecg_data.csv", threshold=0.9, thr_brady=50, thr_tachy=140):
         """.. function:: __init__(self, threshold=0.9, thr_brady=50, thr_tachy=140)
 
+        :param argument: specifies the input file name
         :param threshold: specifies a heart beat
         :param thr_brady: indicates whether Bradycardia is detected
         :param thr_tachy: indicates whether Tachycardia is detected
@@ -22,7 +23,7 @@ class ECGMeasure:
         self.__threshold = threshold
         self.__thr_brady = thr_brady
         self.__thr_tachy = thr_tachy
-        inputfile = ECGInput(argument)
+        inputfile = ECGInput(file=argument)
         self.file = inputfile.file
         self.__hr_rawdata = inputfile.ecg_dataframe
         self.data = None
