@@ -27,6 +27,8 @@ class ECGMeasure:
         self.file = inputfile.file
         self.__hr_rawdata = inputfile.ecg_dataframe
         self.data = None
+        self.averaging_period = None
+        self.avg_hr = None
 
     def thresholdhr(self):
         """ .. function:: thresholdhr(self)
@@ -129,6 +131,20 @@ class ECGMeasure:
                 self.data.at[x, 'B/T'] = 'Tachycardia Detected'
             else:
                 self.data.at[x, 'B/T'] = 'Healthy... for now'
+
+    def acquire_avgper(self, averaging_period = 5):
+        self.averaging_period = averaging_period
+
+    def hr_average(self):
+        max_time = self.data['time'].iat[-1]
+        """averaging_bins = #of bins
+
+        for i in range(0, averaging_bins):
+            self.avg_hr = self.data['HearRate']
+            May want to create new averageing dataframe or
+            or use existing methods for different .data attribute.
+            Will decide later"""
+
 
 
 def main(arguments):
