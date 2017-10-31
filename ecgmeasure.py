@@ -27,6 +27,7 @@ class ECGMeasure:
         self.file = inputfile.file
         self.__hr_rawdata = inputfile.ecg_dataframe
         self.data = None
+        # self.averagingPeriod = inputfile.averagingPeriod
 
     def thresholdhr(self):
         """ .. function:: thresholdhr(self)
@@ -63,10 +64,11 @@ class ECGMeasure:
         # Calls thresholdhr every so often
         self.thresholdhr()
         [thresholds, data_chunk, number_chunks] = self.data
-        columns = ['HeartRate', 'B/T', 'time']
-        hr = pd.DataFrame(numpy.empty(((len(thresholds)), 3)), columns=columns)
+        columns = ['HeartRate', 'bradycardia_annotations', 'tachycardia_annotations', 'time']
+        hr = pd.DataFrame(numpy.empty(((len(thresholds)), 4)), columns=columns)
         hr['HeartRate'] = None
-        hr['B/T'] = 'Healthy... for now'
+        hr['bradycardia_annotations'] = False
+        hr['tachycardia_annotations'] = False
         hr['time'] = list(range(0, number_chunks * 5, 5))
         hb_count = [0] * len(thresholds)
 
@@ -123,12 +125,10 @@ class ECGMeasure:
         for x in range(0, len(self.data)):
             if self.data['HeartRate'][x] < self.__thr_brady:
                 bradycount += 1
-                self.data.at[x, 'B/T'] = 'Bradycardia Detected'
+                self.data.at[x, 'bradycardia_annotations'] = True
             elif self.data['HeartRate'][x] > self.__thr_tachy:
                 tachycount += 1
-                self.data.at[x, 'B/T'] = 'Tachycardia Detected'
-            else:
-                self.data.at[x, 'B/T'] = 'Healthy... for now'
+                self.data.at[x, 'tachycardia_annotations'] = True
 
 
 def main(arguments):
