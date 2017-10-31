@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy
 import math
-from ecginput import ECGInput
-from ecgoutput import ECGOutput
+# from ecginput import ECGInput
+# from ecgoutput import ECGOutput
 import sys
 
 
@@ -11,7 +11,7 @@ class ECGMeasure:
     __init__ sets the __hr_rawdata
     """
 
-    def __init__(self, argument="ecg_data.csv", threshold=0.9, thr_brady=50, thr_tachy=140):
+    def __init__(self, argument="ecg_data.csv", threshold=0.9, thr_brady=50, thr_tachy=140, rawdata=None):
         """.. function:: __init__(self, threshold=0.9, thr_brady=50, thr_tachy=140)
 
         :param argument: specifies the input file name
@@ -23,9 +23,10 @@ class ECGMeasure:
         self.__threshold = threshold
         self.__thr_brady = thr_brady
         self.__thr_tachy = thr_tachy
-        inputfile = ECGInput(file=argument)
-        self.file = inputfile.file
-        self.__hr_rawdata = inputfile.ecg_dataframe
+        # inputfile = ECGInput(file=argument)
+        # self.file = inputfile.file
+        # self.__hr_rawdata = inputfile.ecg_dataframe
+        self.__hr_rawdata = rawdata
         self.data = None
         self.avgdata = None
         self.averaging_period = None
@@ -189,8 +190,8 @@ def main(arguments):
         hr_measure.change_tachy_threshold(120)
         hr_measure.hrdetector()
         hr_measure.detect_rhythm()
-        hr_output = ECGOutput(hr_measure.data, hr_measure.file)
-        hr_output.write_ecg()
+        # hr_output = ECGOutput(hr_measure.data, hr_measure.file)
+        # hr_output.write_ecg()
 
 
 if __name__ == "__main__":
