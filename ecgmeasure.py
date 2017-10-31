@@ -102,8 +102,6 @@ class ECGMeasure:
         :param brady_threshold: new value that the brady threshold will be changed to
         """
         self.__thr_brady = brady_threshold
- #Finds last time spot
- #Finds last time spot
 
     def change_tachy_threshold(self, tachy_threshold):
         """.. function:: change_tachy_threshold(self, tachy_threshold)
@@ -138,15 +136,28 @@ class ECGMeasure:
     def acquire_avgper(self, averaging_period = 5):
         self.averaging_period = averaging_period
 
-    def hr_average(self):
-        max_time = self.data['time'].iat[-1]
-        num_avg_bins = floor(max_time/self.averaging_period)
+    def hrdetector_average(self):
+        columns = ['HeartRate','time','bradycardia_annotations','tachycardia_annotations']        
+        num_avg_bins = floor(self.data['time'].iat[-1]/self.averaging_period)
+        time_intervals = list(range(1,num_avg_bins+1))
+        
+        avgdata = pd.DataFrame(numpy.empty(((len(time_intervals)),4)), columns = columns)
+        avgdata['time'] = time_intervals
+        avgdata['HeartRate'] = None
+        avgdata['bradycardia_annotations'] = False
+        avgdata['bradycardia_annotations'] = False
 
-        for i in range(0, averaging_bins):
-            self.avg_hr = self.data['HearRate']
-            May want to create new averageing dataframe or
-            or use existing methods for different .data attribute.
-            Will decide later"""
+        for i in range(0, num_avg_bins):
+            avgdata.at[i, 'HeartRate'] = self.data['HeartRate'][i*avgeraging_period:i*avgeraging_period+averaging_period].mean()
+
+        self.avgdata = avgdata
+
+    def detect_rhythm_avg(self):
+        for x in range(0,len(self.avgdata)):
+            if self.avgdata['HeartRate'][x] < self.__thrbrady:
+                self.avgdata.at[x, 'bradycardia_annotations'] = True
+            elif self.avgdata['HeartRate'][x] >self.__thrtachy:
+                self.avgdata.at[x, 'tachycardia_annotations'] = True
 
 
 
