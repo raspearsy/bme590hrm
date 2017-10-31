@@ -27,6 +27,7 @@ class ECGMeasure:
         self.file = inputfile.file
         self.__hr_rawdata = inputfile.ecg_dataframe
         self.data = None
+        self.avgdata = None
         self.averaging_period = None
         self.avg_hr = None
 
@@ -101,6 +102,8 @@ class ECGMeasure:
         :param brady_threshold: new value that the brady threshold will be changed to
         """
         self.__thr_brady = brady_threshold
+ #Finds last time spot
+ #Finds last time spot
 
     def change_tachy_threshold(self, tachy_threshold):
         """.. function:: change_tachy_threshold(self, tachy_threshold)
@@ -137,7 +140,7 @@ class ECGMeasure:
 
     def hr_average(self):
         max_time = self.data['time'].iat[-1]
-        """averaging_bins = #of bins
+        num_avg_bins = floor(max_time/self.averaging_period)
 
         for i in range(0, averaging_bins):
             self.avg_hr = self.data['HearRate']
