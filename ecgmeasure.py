@@ -64,7 +64,7 @@ class ECGMeasure:
         # Calls thresholdhr every so often
         self.thresholdhr()
         [thresholds, data_chunk, number_chunks] = self.data
-        columns = ['HeartRate', 'bradycardia_annotations', 'tachycardia_annotations' 'time']
+        columns = ['HeartRate', 'bradycardia_annotations', 'tachycardia_annotations', 'time']
         hr = pd.DataFrame(numpy.empty(((len(thresholds)), 4)), columns=columns)
         hr['HeartRate'] = None
         hr['bradycardia_annotations'] = False
