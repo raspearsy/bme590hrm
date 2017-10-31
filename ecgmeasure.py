@@ -143,7 +143,7 @@ class ECGMeasure:
         """
         self.averaging_period = averaging_period
 
-    def hrdetector_average(self):
+    def hrdetector_avg(self):
         """.. function:: hrdetector_average(self)
 
         Creates dataframe to contain average data and finds the average for each averaging period
