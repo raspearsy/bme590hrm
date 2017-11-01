@@ -162,7 +162,9 @@ class ECGMeasure:
         avgdata['bradycardia_annotations'] = False
 
         for i in range(0, num_avg_bins):
-            avgdata.at[i, 'HeartRate'] = self.data['HeartRate'][i*avgeraging_period:i*avgeraging_period+averaging_period].mean()
+            start_ind = int(np.floor(i*averaging_period/5))
+            stop_ind = int(np.floor((i*averaging_period+averaging_period)/5)-1)
+            avgdata.at[i, 'HeartRate'] = self.data['HeartRate'][start_ind:stop_ind].mean()
 
         self.avgdata = avgdata
 
