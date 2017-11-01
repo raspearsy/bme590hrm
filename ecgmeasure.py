@@ -150,6 +150,8 @@ class ECGMeasure:
 
         :param self: instance of ECGMeasure class
         """
+
+        self.hrdetector()
         
         columns = ['HeartRate','time','bradycardia_annotations','tachycardia_annotations']        
         num_avg_bins = floor(self.data['time'].iat[-1]/self.averaging_period)
