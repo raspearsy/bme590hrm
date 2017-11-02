@@ -27,9 +27,9 @@ def summary():
     hr.detect_rhythm()
 
     return jsonify(time=time,
-                   instantaneous_heart_rate=hr.data['HeartRate'],
-                   tachycardia_annotations=hr.data['tachycardia_annotations'],
-                   bradycardia_annotations=hr.data['bradycardia_annotations'])
+                   instantaneous_heart_rate=hr.data['HeartRate'].tolist(),
+                   tachycardia_annotations=hr.data['tachycardia_annotations'].tolist(),
+                   bradycardia_annotations=hr.data['bradycardia_annotations'].tolist())
 
 
 @app.route("/api/heart_rate/average", methods=['POST'])
@@ -49,7 +49,7 @@ def average():
     # as of writing, the above methods and below attribute avg_data have not been created
 
     return jsonify(averaging_period=averaging_period,
-                   time_interval=hr.avg_data['time'],
-                   average_heart_rate=hr.avg_data['HeartRate'],
-                   tachycardia_annotations=hr.avg_data['tachycardia_annotations'],
-                   bradycardia_annotations=hr.avg_data['bradycardia_annotations'])
+                   time_interval=hr.avg_data['time'].tolist(),
+                   average_heart_rate=hr.avg_data['HeartRate'].tolist(),
+                   tachycardia_annotations=hr.avg_data['tachycardia_annotations'].tolist(),
+                   bradycardia_annotations=hr.avg_data['bradycardia_annotations'].tolist())
