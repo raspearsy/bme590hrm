@@ -30,12 +30,10 @@ class ECGMeasure:
         self.avgdata = None
         self.averaging_period = None
         self.avg_hr = None
-
+        
     def thresholdhr(self):
         """ .. function:: thresholdhr(self)
-
         Will return a list of thresholds, as well as the number of chunks and data_chunk size
-
         :param: self: instance of the ECGMeasure class
         """
 
@@ -55,9 +53,7 @@ class ECGMeasure:
 
     def hrdetector(self):
         """.. function:: hrdetector(self)
-
         Use threshold detection to specify a heart beat (QRS height) and estimate both instantaneous and hr over delta_t
-
         :param self: instance of ECGMeasure class
         """
         # delta_t = input('Enter how long you would like to average your heart rate over (in s): ')
@@ -66,10 +62,11 @@ class ECGMeasure:
         # Calls thresholdhr every so often
         self.thresholdhr()
         [thresholds, data_chunk, number_chunks] = self.data
-        columns = ['HeartRate', 'B/T', 'time']
-        hr = pd.DataFrame(numpy.empty(((len(thresholds)), 3)), columns=columns)
+        columns = ['HeartRate', 'bradycardia_annotations', 'tachycardia_annotations', 'time']
+        hr = pd.DataFrame(numpy.empty(((len(thresholds)), 4)), columns=columns)
         hr['HeartRate'] = None
-        hr['B/T'] = 'Healthy... for now'
+        hr['bradycardia_annotations'] = False
+        hr['tachycardia_annotations'] = False
         hr['time'] = list(range(0, number_chunks * 5, 5))
         hb_count = [0] * len(thresholds)
 
@@ -126,18 +123,16 @@ class ECGMeasure:
         for x in range(0, len(self.data)):
             if self.data['HeartRate'][x] < self.__thr_brady:
                 bradycount += 1
-                self.data.at[x, 'B/T'] = 'Bradycardia Detected'
+                self.data.at[x, 'bradycardia_annotations'] = True
             elif self.data['HeartRate'][x] > self.__thr_tachy:
                 tachycount += 1
-                self.data.at[x, 'B/T'] = 'Tachycardia Detected'
-            else:
-                self.data.at[x, 'B/T'] = 'Healthy... for now'
-
+                self.data.at[x, 'tachycardia_annotations'] = True
+                
     def acquire_avgper(self, averaging_period = 5):
         """.. function:: acquire_avgper(self, averaging_period)
-
+        
         Adds averaging_period attribute to self
-
+        
         :param self: instance of ECGMeasure class
         :param averaging_period: period in seconds for averaging inst hr data
         """
@@ -145,9 +140,9 @@ class ECGMeasure:
 
     def hrdetector_avg(self):
         """.. function:: hrdetector_average(self)
-
+        
         Creates dataframe to contain average data and finds the average for each averaging period
-
+        
         :param self: instance of ECGMeasure class
         """
 
@@ -172,9 +167,9 @@ class ECGMeasure:
 
     def detect_rhythm_avg(self):
         """.. function:: detect_rhythm_avg(self)
-
+        
         Detects bradycardia & tachycardia from average data based on threshold input and writes instances to avgdata DataFrame
-
+        
         :param self: instance of ECGMeasure class
         """
         
@@ -183,7 +178,6 @@ class ECGMeasure:
                 self.avgdata.at[x, 'bradycardia_annotations'] = True
             elif self.avgdata['HeartRate'][x] >self.__thrtachy:
                 self.avgdata.at[x, 'tachycardia_annotations'] = True
-
 
 
 def main(arguments):
