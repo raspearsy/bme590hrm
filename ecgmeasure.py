@@ -77,7 +77,7 @@ class ECGMeasure:
                         (self.__hr_rawdata['voltage'][(i + (j * data_chunk) - 1)] < thresholds['Threshold'][j]):
                     hb_count[j] = hb_count[j] + 1
             hr.at[j, 'HeartRate'] = (hb_count[j] / 5) * 60
-        print(hr)
+        #print(hr)
         self.data = hr
 
     def change_threshold(self, threshold):
@@ -157,7 +157,7 @@ class ECGMeasure:
         avgdata['time'] = time_intervals
         avgdata['HeartRate'] = None
         avgdata['bradycardia_annotations'] = False
-        avgdata['bradycardia_annotations'] = False
+        avgdata['tachycardia_annotations'] = False
 
         for i in range(0, num_avg_bins):
             start_ind = int(np.floor(i*averaging_period/5))
