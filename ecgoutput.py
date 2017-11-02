@@ -28,16 +28,16 @@ class ECGOutput:
 
         # Tells user the purpose of this program
         print_str = """This program will summarize the ECG data.
-        Data recorded from 0s to {}s.
-        Enter a start and stop time in that range to get an instantaneous
-        heart rate at those times, an average rate over that period,
-        and any bradycardia or tachycardia events between those times.""".format(max_time)
-        print(print_str)
+Data recorded from 0s to {}s.
+Enter a start and stop time in that range to get an instantaneous
+heart rate at those times, an average rate over that period,
+and any bradycardia or tachycardia events between those times."""
+        print(print_str.format(max_time))
 
         # Error messages for possible errors
-        err_msg_max = ('\nThe time you selected is longer than the recorded data!\n\
-        Please choose between 0s and {}s\n\n'.format(max_time))
-        err_msg_not_int = ('\nNot an integer! Please choose a time between 0s and {}s\n\n'.format(max_time))
+        errmsg_max = """\nThe time you selected is longer than the recorded data!
+        Please choose between 0s and {}s\n\n"""
+        errmsg_notint = '\nNot an integer! Please choose a time between 0s and {}s\n\n'
 
         # Get user specified period for averaging heartrate
         start_time_str = 'Start time (in seconds): '
@@ -47,13 +47,13 @@ class ECGOutput:
             try:
                 start_time = int(input(start_time_str))
             except ValueError:
-                print(err_msg_not_int)
+                print(errmsg_notint.format(max_time))
             else:
                 if start_time > max_time:
-                    print(err_msg_max)
-                    continue
-                start_time = int(start_time)
-                break
+                    print(errmsg_max.format(max_time))
+                else:
+                    start_time = int(start_time)
+                    break
 
         # Get user specified stop time
         stop_time_str = 'Stop time (in seconds): '
@@ -63,7 +63,7 @@ class ECGOutput:
             try:
                 stop_time = int(input(stop_time_str))
             except ValueError:
-                print(err_msg_not_int)
+                print(errmsg_notint)
                 continue
             else:
                 break
@@ -102,9 +102,9 @@ class ECGOutput:
 
 
             hr_template = """Estimated instantaneous heart rate at {start_time}s: {start_hr} BPM
-            Estimated instantaneous heart rate at {stop_time}s: {stop_hr} BPM
-            Estimated average heart rate from {start_time}s to {stop_time}s: {avg_hr} BPM
-            """
+Estimated instantaneous heart rate at {stop_time}s: {stop_hr} BPM
+Estimated average heart rate from {start_time}s to {stop_time}s: {avg_hr} BPM
+"""
             hr_context = {
                 "start_time": start_time,
                 "stop_time": stop_time,
@@ -113,4 +113,8 @@ class ECGOutput:
                 "avg_hr": self.data['HeartRate'][start_ind:stop_ind].mean()
             }
 
-            ecg_results.write(hr_template.format(**hr_context) + '\n' + brady_str + '\n' + tachy_str)
+            write_str = '\n'.join([hr_template.format(**hr_context),
+                                   brady_str,
+                                   tachy_str])
+
+            ecg_results.write(write_str)
