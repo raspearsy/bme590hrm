@@ -82,12 +82,6 @@ class ECGOutput:
 
         # Writes the output of the ECG analysis to an output file named ecgOutput.txt
         with open("{}_{}_{}.txt".format(self.file[:-4], start_time, stop_time), 'w') as ecg_results:
-            inst_hr_start_str = "Estimated instantaneous heart rate at {}s: {} BPM" \
-                .format(start_time, self.data['HeartRate'][start_ind])
-            inst_hr_stop_str = "Estimated instantaneous heart rate at {}s: {} BPM" \
-                .format(stop_time, self.data['HeartRate'][stop_ind])
-            avg_hr = self.data['HeartRate'][start_ind:stop_ind].mean()
-            avg_hr_str = "Estimated average heart rate from {}s to {}s: {} BPM".format(start_time, stop_time, avg_hr)
 
             brady_times = []
             tachy_times = []
@@ -106,5 +100,17 @@ class ECGOutput:
             else:
                 tachy_str = "Tachycardia occurred at the following times (seconds): {}".format(tachy_times)
 
-            ecg_results.write(inst_hr_start_str + '\n'
-                              + inst_hr_stop_str + '\n' + avg_hr_str + '\n' + brady_str + '\n' + tachy_str)
+
+            hr_template = """Estimated instantaneous heart rate at {start_time}s: {start_hr} BPM
+            Estimated instantaneous heart rate at {stop_time}s: {stop_hr} BPM
+            Estimated average heart rate from {start_time}s to {stop_time}s: {avg_hr} BPM
+            """
+            hr_context = {
+                "start_time": start_time,
+                "stop_time": stop_time,
+                "start_hr": self.data['HeartRate'][start_ind],
+                "stop_hr": self.data['HeartRate'][stop_ind],
+                "avg_hr": self.data['HeartRate'][start_ind:stop_ind].mean()
+            }
+
+            ecg_results.write(hr_template.format(**hr_context) + '\n' + brady_str + '\n' + tachy_str)
