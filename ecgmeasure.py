@@ -1,9 +1,11 @@
-import pandas as pd
-import numpy
 import math
+import sys
+
+import numpy
+import pandas as pd
+
 from ecginput import ECGInput
 from ecgoutput import ECGOutput
-import sys
 
 
 class ECGMeasure:
@@ -11,7 +13,8 @@ class ECGMeasure:
     __init__ sets the __hr_rawdata
     """
 
-    def __init__(self, argument="ecg_data.csv", threshold=0.9, thr_brady=50, thr_tachy=140):
+    def __init__(self, argument="ecg_data.csv", threshold=0.9, thr_brady=50,
+                 thr_tachy=140):
         """.. function:: __init__(self, threshold=0.9, thr_brady=50, thr_tachy=140)
 
         :param argument: specifies the input file name
@@ -31,7 +34,8 @@ class ECGMeasure:
     def thresholdhr(self):
         """ .. function:: thresholdhr(self)
 
-        Will return a list of thresholds, as well as the number of chunks and data_chunk size
+        Will return a list of thresholds, as well as the number of chunks
+        and data_chunk size
 
         :param: self: instance of the ECGMeasure class
         """
@@ -45,15 +49,18 @@ class ECGMeasure:
         threshold_hr = [None] * number_chunks
 
         for j in range(0, number_chunks):
-            maxhr_data = max(self.__hr_rawdata['voltage'][(j * data_chunk):(j * data_chunk) + data_chunk])
+            maxhr_data = max(self.__hr_rawdata['voltage'][
+                             (j * data_chunk):(j * data_chunk) + data_chunk])
             threshold_hr[j] = self.__threshold * maxhr_data
-        threshold_hr = pd.DataFrame(numpy.array(threshold_hr), columns=['Threshold'])
+        threshold_hr = pd.DataFrame(numpy.array(threshold_hr),
+                                    columns=['Threshold'])
         self.data = [threshold_hr, data_chunk, number_chunks]
 
     def hrdetector(self):
         """.. function:: hrdetector(self)
 
-        Use threshold detection to specify a heart beat (QRS height) and estimate both instantaneous and hr over delta_t
+        Use threshold detection to specify a heart beat (QRS height)
+        and estimate both instantaneous and hr over delta_t
 
         :param self: instance of ECGMeasure class
         """
@@ -72,8 +79,11 @@ class ECGMeasure:
 
         for j in range(0, len(thresholds)):
             for i in range(1, data_chunk):
-                if (self.__hr_rawdata['voltage'][i + (j * data_chunk)] > thresholds['Threshold'][j]) and \
-                        (self.__hr_rawdata['voltage'][(i + (j * data_chunk) - 1)] < thresholds['Threshold'][j]):
+                if (self.__hr_rawdata['voltage'][i + (j * data_chunk)] >
+                        thresholds['Threshold'][j]) and \
+                        (self.__hr_rawdata['voltage'][
+                             (i + (j * data_chunk) - 1)] <
+                             thresholds['Threshold'][j]):
                     hb_count[j] = hb_count[j] + 1
             hr.at[j, 'HeartRate'] = (hb_count[j] / 5) * 60
         print(hr)
@@ -96,7 +106,8 @@ class ECGMeasure:
         Change the threshold that indicates whether Bradycardia is detected
 
         :param self: instance of ECGMeasure class
-        :param brady_threshold: new value that the brady threshold will be changed to
+        :param brady_threshold: new value that
+        the brady threshold will be changed to
         """
         self.__thr_brady = brady_threshold
 
@@ -106,26 +117,28 @@ class ECGMeasure:
         Change the threshold that indicates whether Tachycardia is detected
 
         :param self: instance of ECGMeasure class
-        :param tachy_threshold: new value that the tachy threshold will be changed to
+        :param tachy_threshold: new value that
+        the tachy threshold will be changed to
         """
         self.__thr_tachy = tachy_threshold
 
     def detect_rhythm(self):
         """.. function:: detect_rhythm(self, hr)
 
-        Detects bradycardia & tachycardia based on threshold input and writes instances to hr DataFrame
+        Detects bradycardia & tachycardia based on threshold input
+        and writes instances to hr DataFrame
 
         :param self: instance of ECGMeasure class
         """
 
-        bradycount = 0
-        tachycount = 0
+        brady_count = 0
+        tachy_count = 0
         for x in range(0, len(self.data)):
             if self.data['HeartRate'][x] < self.__thr_brady:
-                bradycount += 1
+                brady_count += 1
                 self.data.at[x, 'B/T'] = 'Bradycardia Detected'
             elif self.data['HeartRate'][x] > self.__thr_tachy:
-                tachycount += 1
+                tachy_count += 1
                 self.data.at[x, 'B/T'] = 'Tachycardia Detected'
             else:
                 self.data.at[x, 'B/T'] = 'Healthy... for now'

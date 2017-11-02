@@ -1,8 +1,11 @@
-import pandas as pd
 import numpy as np
+import pandas as pd
+
 from ecginput import ECGInput
 
-# requires test .csv file containing 2 columns w/ 1 row string header and all below rows float/int
+
+# requires test .csv file containing 2 columns w/ 1 row string header
+# and all below rows float/int
 
 
 def test_ecg_dataframe_size():
@@ -24,9 +27,11 @@ def test_ecg_dataframe_type():
     """
     ecg_input = ECGInput(file="testfile1.csv")
     assert isinstance(ecg_input.ecg_dataframe, pd.DataFrame)
-    assert isinstance(ecg_input.ecg_dataframe.time[0], np.float64) or isinstance(
-        ecg_input.ecg_dataframe.time[0], np.int64)
-    assert isinstance(ecg_input.ecg_dataframe.voltage[0], np.float64) or isinstance(
+    assert isinstance(ecg_input.ecg_dataframe.time[0],
+                      np.float64) or isinstance(
+                    ecg_input.ecg_dataframe.time[0], np.int64)
+    assert isinstance(ecg_input.ecg_dataframe.voltage[0],
+                      np.float64) or isinstance(
         ecg_input.ecg_dataframe.voltage[0], np.int64)
 
 

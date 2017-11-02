@@ -1,4 +1,3 @@
-import pandas as pd
 import numpy as np
 
 
@@ -30,8 +29,8 @@ class ECGOutput:
         # Tells user the purpose of this program
         print_str = """This program will summarize the ECG data.
         Data recorded from 0s to {}s.
-        Enter a start and stop time in that range to get an instantaneous 
-        heart rate at those times, an average rate over that period, 
+        Enter a start and stop time in that range to get an instantaneous
+        heart rate at those times, an average rate over that period,
         and any bradycardia or tachycardia events between those times.""".format(max_time)
         print(print_str)
 
@@ -85,7 +84,7 @@ class ECGOutput:
         with open("{}_{}_{}.txt".format(self.file[:-4], start_time, stop_time), 'w') as ecg_results:
             inst_hr_start_str = "Estimated instantaneous heart rate at {}s: {} BPM" \
                 .format(start_time, self.data['HeartRate'][start_ind])
-            inst_hr_stop_str = "Estimated instantaneous heart rate at {}s: {} BPM"\
+            inst_hr_stop_str = "Estimated instantaneous heart rate at {}s: {} BPM" \
                 .format(stop_time, self.data['HeartRate'][stop_ind])
             avg_hr = self.data['HeartRate'][start_ind:stop_ind].mean()
             avg_hr_str = "Estimated average heart rate from {}s to {}s: {} BPM".format(start_time, stop_time, avg_hr)

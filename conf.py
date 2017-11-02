@@ -152,6 +152,3 @@ texinfo_documents = [
      author, 'bme590hrm', 'One line description of project.',
      'Miscellaneous'),
 ]
-
-
-

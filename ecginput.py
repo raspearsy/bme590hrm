@@ -20,19 +20,25 @@ class ECGInput:
     def read_input(self):
         """.. function:: read_input(self)
 
-        Read in a CSV file and convert it into a DataFrame with the columns being time and voltage"
+        Read in a CSV file and convert it into a DataFrame
+        with the columns being time and voltage"
 
         :param: instance of ECGInput class
         :return: An DataFrame for the time and voltage ecg data
         """
 
         try:
-            self.ecg_dataframe = pd.read_csv(self.file, names=['time', 'voltage'], skiprows=1)
+            self.ecg_dataframe = pd.read_csv(self.file,
+                                             names=['time', 'voltage'],
+                                             skiprows=1)
             if len(self.ecg_dataframe) == 0:
                 raise Exception("No data found")
-            self.ecg_dataframe['time'] = pd.to_numeric(self.ecg_dataframe['time'], errors='coerce')
-            self.ecg_dataframe['voltage'] = pd.to_numeric(self.ecg_dataframe['voltage'], errors='coerce')
-            self.ecg_dataframe = self.ecg_dataframe[abs(self.ecg_dataframe['voltage']) <= 300]
+            self.ecg_dataframe['time'] = pd.to_numeric(
+                self.ecg_dataframe['time'], errors='coerce')
+            self.ecg_dataframe['voltage'] = pd.to_numeric(
+                self.ecg_dataframe['voltage'], errors='coerce')
+            self.ecg_dataframe = self.ecg_dataframe[
+                abs(self.ecg_dataframe['voltage']) <= 300]
             self.ecg_dataframe = self.ecg_dataframe.reset_index()
             if len(self.ecg_dataframe) == 0:
                 raise Exception("No valid data found")
