@@ -1,6 +1,9 @@
-from ecgmeasure import ECGMeasure
-import pandas as pd
 import numpy as np
+import pandas as pd
+
+from ecgmeasure import ECGMeasure
+
+
 # need to test what happens when have too little data to create a chunk
 # need to throw an exception if have too little data
 
@@ -11,10 +14,10 @@ def get_raw_data():
    Creates dataframe with raw data.
 
     """
-    times = [x*0.1 for x in range(0, 10*50)]
+    times = [x * 0.1 for x in range(0, 10 * 50)]
     voltages = []
     for x in range(0, 10):
-        for ii in range(0, 25+1):
+        for ii in range(0, 25 + 1):
             voltages.append(ii)
         for jj in range(24, 0, -1):
             voltages.append(jj)
@@ -29,14 +32,14 @@ def test_thresholdhr_unchanging():
     """
     thr = []
     for x in range(0, 10):
-        thr.append(0.9*25)
+        thr.append(0.9 * 25)
     thresholds = np.array(thr)
     chunk = 50
     num_chunks = 10
 
     biomeasure = ECGMeasure(argument="test_hr.csv")
     # biomeasure.__hr_rawdata = get_raw_data()
-    #print(biomeasure.__hr_rawdata)
+    # print(biomeasure.__hr_rawdata)
     biomeasure.thresholdhr()
     [t, c, n] = biomeasure.data
 
@@ -55,9 +58,11 @@ def get_test_hr1():
     initial_messages = []
     hrs = []
     for ii in range(0, 10):
-        hrs.append(1/5*60)
+        hrs.append(1 / 5 * 60)
         initial_messages.append('Bradycardia Detected')
-    test_hr1 = pd.DataFrame({'HeartRate': hrs, 'B/T': initial_messages, 'time': list(range(0, 50, 5))})
+    test_hr1 = pd.DataFrame({'HeartRate': hrs,
+                             'B/T': initial_messages,
+                             'time': list(range(0, 50, 5))})
     return test_hr1
 
 
