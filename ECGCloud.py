@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from ecginput import ECGInput
 from ecgmeasure import ECGMeasure
 
 app = Flask(__name__)
@@ -6,6 +7,27 @@ app = Flask(__name__)
 # probably not the most elegant way of doing this, but should work
 # more ideal to use something innate to the post to increment the counter
 request_counter = 0
+
+
+def make_post_summary(filename="ecgdata.csv", host="http://localhost:5000"):
+    ecg = ECGInput(file=filename)
+    rawdata = ecg.read_input()
+    time = rawdata['time'].tolist()
+    voltages = rawdata['voltage'].tolist()
+    data = jsonify(time=time, voltage=voltages)
+    url = host+"/api/heart_rate/summary"
+    request.post(url, data)
+
+
+def make_post_average(filename="ecgdata.csv", host="http://localhost:5000", averaging_period=20):
+    ecg = ECGInput(file=filename)
+    rawdata = ecg.read_input()
+    # need some other stuff in here to convert to averaged period & such...ECGMeasure???
+    time = rawdata['time'].tolist()
+    voltages = rawdata['voltage'].tolist()
+    data = jsonify(averaging_period=averaging_period, time_interval=time, voltage=voltages)
+    url = host+"/api/heart_rate/average"
+    request.post(url, data)
 
 
 @app.route("/api/requests")
