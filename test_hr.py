@@ -34,7 +34,7 @@ def test_thresholdhr_unchanging():
     chunk = 50
     num_chunks = 10
 
-    biomeasure = ECGMeasure(argument="test_hr.csv")
+    biomeasure = ECGMeasure(file_bool=True, argument="test_hr.csv")
     # biomeasure.__hr_rawdata = get_raw_data()
     #print(biomeasure.__hr_rawdata)
     biomeasure.thresholdhr()
@@ -66,7 +66,7 @@ def test_hrdetector():
 
     Test that hrdetector() correctly detects brady/tachycardia.
     """
-    biomeasure = ECGMeasure(argument="test_hr.csv")
+    biomeasure = ECGMeasure(file_bool=True, argument="test_hr.csv")
     # biomeasure.__raw_data = get_raw_data()
     test_hr1 = get_test_hr1()
     biomeasure.hrdetector()
