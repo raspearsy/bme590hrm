@@ -40,7 +40,7 @@ Goals:
 
 Desciription:
 UPDATED VERSION
-Link for virtual server: http://vcm-1839.vm.duke.edu:5000
+Link for virtual server: http://vcm-1844.vm.duke.edu:5000
 
 /api/requests is a GET endpoint that provides the number of requests 
 

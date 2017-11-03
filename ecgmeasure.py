@@ -14,7 +14,6 @@ class ECGMeasure:
     def __init__(self, file_bool=False, argument="ecg_data.csv", threshold=0.9, thr_brady=50, thr_tachy=140,
                  rawdata=None):
         """.. function:: __init__(self, threshold=0.9, thr_brady=50, thr_tachy=140)
-
         :param argument: specifies the input file name
         :param threshold: specifies a heart beat
         :param thr_brady: indicates whether Bradycardia is detected
@@ -38,9 +37,8 @@ class ECGMeasure:
 
     def thresholdhr(self):
         """ .. function:: thresholdhr(self)
-
         Will return a list of thresholds, as well as the number of chunks and data_chunk size
-        
+
         :param: self: instance of the ECGMeasure class
         """
 
@@ -59,9 +57,7 @@ class ECGMeasure:
 
     def hrdetector(self):
         """.. function:: hrdetector(self)
-
         Use threshold detection to specify a heart beat (QRS height) and estimate both instantaneous and hr over delta_t
-
         :param self: instance of ECGMeasure class
         """
         # delta_t = input('Enter how long you would like to average your heart rate over (in s): ')
@@ -96,9 +92,7 @@ class ECGMeasure:
 
     def change_threshold(self, threshold):
         """.. function:: change_threshold(self, threshold)
-
         Change the threshold that specifies a heart beat
-
         :param self: instance of ECGMeasure class
         :param threshold: new value that threshold will be changed to
         """
@@ -107,9 +101,7 @@ class ECGMeasure:
 
     def change_brady_threshold(self, brady_threshold):
         """.. function:: change_brady_threshold(self, brady_threshold)
-
         Change the threshold that indicates whether Bradycardia is detected
-
         :param self: instance of ECGMeasure class
         :param brady_threshold: new value that the brady threshold will be changed to
         """
@@ -117,9 +109,7 @@ class ECGMeasure:
 
     def change_tachy_threshold(self, tachy_threshold):
         """.. function:: change_tachy_threshold(self, tachy_threshold)
-
         Change the threshold that indicates whether Tachycardia is detected
-
         :param self: instance of ECGMeasure class
         :param tachy_threshold: new value that the tachy threshold will be changed to
         """
@@ -127,9 +117,7 @@ class ECGMeasure:
 
     def detect_rhythm(self):
         """.. function:: detect_rhythm(self, hr)
-
         Detects bradycardia & tachycardia based on threshold input and writes instances to hr DataFrame
-
         :param self: instance of ECGMeasure class
         """
 
@@ -137,14 +125,14 @@ class ECGMeasure:
         tachycount = 0
         if self.file_bool:
             for x in range(0, len(self.data)):
-                    if self.data['HeartRate'][x] < self.__thr_brady:
-                        bradycount += 1
-                        self.data.at[x, 'B/T'] = 'Bradycardia Detected'
-                    elif self.data['HeartRate'][x] > self.__thr_tachy:
-                        tachycount += 1
-                        self.data.at[x, 'B/T'] = 'Tachycardia Detected'
-                    else:
-                        self.data.at[x, 'B/T'] = 'Healthy... for now'
+                if self.data['HeartRate'][x] < self.__thr_brady:
+                    bradycount += 1
+                    self.data.at[x, 'B/T'] = 'Bradycardia Detected'
+                elif self.data['HeartRate'][x] > self.__thr_tachy:
+                    tachycount += 1
+                    self.data.at[x, 'B/T'] = 'Tachycardia Detected'
+                else:
+                    self.data.at[x, 'B/T'] = 'Healthy... for now'
         else:
             for x in range(0, len(self.data)):
                 if self.data['HeartRate'][x] < self.__thr_brady:
@@ -156,9 +144,9 @@ class ECGMeasure:
 
     def acquire_avgper(self, averaging_period=5):
         """.. function:: acquire_avgper(self, averaging_period)
-        
+
         Adds averaging_period attribute to self
-        
+
         :param self: instance of ECGMeasure class
         :param averaging_period: period in seconds for averaging inst hr data
         """
@@ -166,17 +154,17 @@ class ECGMeasure:
 
     def hrdetector_avg(self):
         """.. function:: hrdetector_average(self)
-        
+
         Creates dataframe to contain average data and finds the average for each averaging period
-        
+
         :param self: instance of ECGMeasure class
         """
 
         self.hrdetector()
         columns = ['HeartRate', 'time', 'bradycardia_annotations', 'tachycardia_annotations']
-        num_avg_bins = int(math.floor(self.data['time'].iat[-1]/self.averaging_period))
-        time_intervals = list(range(1, num_avg_bins+1))
-        
+        num_avg_bins = int(math.floor(self.data['time'].iat[-1] / self.averaging_period))
+        time_intervals = list(range(1, num_avg_bins + 1))
+
         avg_data = pd.DataFrame(numpy.empty(((len(time_intervals)), 4)), columns=columns)
         avg_data['time'] = time_intervals
         avg_data['HeartRate'] = None
@@ -184,21 +172,21 @@ class ECGMeasure:
         avg_data['tachycardia_annotations'] = False
 
         for i in range(0, num_avg_bins):
-            start_ind = int(numpy.floor(i*self.averaging_period/5))
-            stop_ind = int(numpy.floor((i*self.averaging_period+self.averaging_period)/5)-1)
+            start_ind = int(numpy.floor(i * self.averaging_period / 5))
+            stop_ind = int(numpy.floor((i * self.averaging_period + self.averaging_period) / 5) - 1)
             avg_data.at[i, 'HeartRate'] = self.data['HeartRate'][start_ind:stop_ind].mean()
 
         self.avg_data = avg_data
 
     def detect_rhythm_avg(self):
         """.. function:: detect_rhythm_avg(self)
-        
+
         Detects bradycardia & tachycardia from average data based on threshold input and writes instances to avgdata
         DataFrame
-        
+
         :param self: instance of ECGMeasure class
         """
-        
+
         for x in range(0, len(self.avg_data)):
             if self.avg_data['HeartRate'][x] < self.__thr_brady:
                 self.avg_data.at[x, 'bradycardia_annotations'] = True

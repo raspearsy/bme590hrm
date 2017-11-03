@@ -16,6 +16,9 @@ def requests():
     Provides the number of requests
 
     """
+    global request_counter
+    request_counter = request_counter + 1
+
     return jsonify(request_counter)
 
 
