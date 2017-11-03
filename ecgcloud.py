@@ -20,19 +20,16 @@ def summary():
 
     time = request.json['time']
     voltages = request.json['voltage']
-    hr_rawdata = {'time': time, 'voltages': voltages}
+    hr_rawdata = {'time': time, 'voltage': voltages}
 
     hr = ECGMeasure(rawdata=hr_rawdata)
     hr.hrdetector()
     hr.detect_rhythm()
 
-    return jsonify(hr.data['HeartRate'].tolist())
-    """
     return jsonify(time=time,
                    instantaneous_heart_rate=hr.data['HeartRate'].tolist(),
                    tachycardia_annotations=hr.data['tachycardia_annotations'].tolist(),
                    bradycardia_annotations=hr.data['bradycardia_annotations'].tolist())
-    """
 
 
 @app.route("/api/heart_rate/average", methods=['POST'])

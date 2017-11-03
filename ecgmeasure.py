@@ -11,7 +11,7 @@ class ECGMeasure:
     __init__ sets the __hr_rawdata
     """
 
-    def __init__(self, argument="ecg_data.csv", threshold=0.9, thr_brady=50, thr_tachy=140, rawdata=None):
+    def __init__(self, threshold=0.9, thr_brady=50, thr_tachy=140, rawdata=None):
         """.. function:: __init__(self, threshold=0.9, thr_brady=50, thr_tachy=140)
 
         :param argument: specifies the input file name
@@ -42,7 +42,7 @@ class ECGMeasure:
         # self.__hr_rawdata['time'] = list(range(0, 50, 5))
         time_step = self.__hr_rawdata['time'][2] - self.__hr_rawdata['time'][1]
         data_chunk = int(math.floor((5 / time_step)))
-        number_chunks = int(math.floor((len(self.__hr_rawdata) / data_chunk)))
+        number_chunks = int(math.floor((len(self.__hr_rawdata['time']) / data_chunk)))
 
         threshold_hr = [None] * number_chunks
 
@@ -77,7 +77,7 @@ class ECGMeasure:
                         (self.__hr_rawdata['voltage'][(i + (j * data_chunk) - 1)] < thresholds['Threshold'][j]):
                     hb_count[j] = hb_count[j] + 1
             hr.at[j, 'HeartRate'] = (hb_count[j] / 5) * 60
-        #print(hr)
+        print(hr)
         self.data = hr
 
     def change_threshold(self, threshold):
@@ -129,7 +129,7 @@ class ECGMeasure:
                 tachycount += 1
                 self.data.at[x, 'tachycardia_annotations'] = True
                 
-    def acquire_avgper(self, averaging_period = 5):
+    def acquire_avgper(self, averaging_period=5):
         """.. function:: acquire_avgper(self, averaging_period)
         
         Adds averaging_period attribute to self
@@ -149,11 +149,11 @@ class ECGMeasure:
 
         self.hrdetector()
         
-        columns = ['HeartRate','time','bradycardia_annotations','tachycardia_annotations']        
+        columns = ['HeartRate', 'time', 'bradycardia_annotations', 'tachycardia_annotations']
         num_avg_bins = floor(self.data['time'].iat[-1]/self.averaging_period)
-        time_intervals = list(range(1,num_avg_bins+1))
+        time_intervals = list(range(1, num_avg_bins+1))
         
-        avgdata = pd.DataFrame(numpy.empty(((len(time_intervals)),4)), columns = columns)
+        avgdata = pd.DataFrame(numpy.empty(((len(time_intervals)), 4)), columns=columns)
         avgdata['time'] = time_intervals
         avgdata['HeartRate'] = None
         avgdata['bradycardia_annotations'] = False
@@ -169,15 +169,16 @@ class ECGMeasure:
     def detect_rhythm_avg(self):
         """.. function:: detect_rhythm_avg(self)
         
-        Detects bradycardia & tachycardia from average data based on threshold input and writes instances to avgdata DataFrame
+        Detects bradycardia & tachycardia from average data based on threshold input and writes instances to avgdata
+        DataFrame
         
         :param self: instance of ECGMeasure class
         """
         
-        for x in range(0,len(self.avgdata)):
+        for x in range(0, len(self.avgdata)):
             if self.avgdata['HeartRate'][x] < self.__thrbrady:
                 self.avgdata.at[x, 'bradycardia_annotations'] = True
-            elif self.avgdata['HeartRate'][x] >self.__thrtachy:
+            elif self.avgdata['HeartRate'][x] > self.__thrtachy:
                 self.avgdata.at[x, 'tachycardia_annotations'] = True
 
 
