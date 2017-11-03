@@ -37,6 +37,7 @@ class ECGMeasure:
 
     def thresholdhr(self):
         """ .. function:: thresholdhr(self)
+
         Will return a list of thresholds, as well as the number of chunks and data_chunk size
 
         :param: self: instance of the ECGMeasure class
@@ -57,7 +58,9 @@ class ECGMeasure:
 
     def hrdetector(self):
         """.. function:: hrdetector(self)
+
         Use threshold detection to specify a heart beat (QRS height) and estimate both instantaneous and hr over delta_t
+
         :param self: instance of ECGMeasure class
         """
         # delta_t = input('Enter how long you would like to average your heart rate over (in s): ')
@@ -92,7 +95,9 @@ class ECGMeasure:
 
     def change_threshold(self, threshold):
         """.. function:: change_threshold(self, threshold)
+
         Change the threshold that specifies a heart beat
+
         :param self: instance of ECGMeasure class
         :param threshold: new value that threshold will be changed to
         """
@@ -101,7 +106,9 @@ class ECGMeasure:
 
     def change_brady_threshold(self, brady_threshold):
         """.. function:: change_brady_threshold(self, brady_threshold)
+
         Change the threshold that indicates whether Bradycardia is detected
+
         :param self: instance of ECGMeasure class
         :param brady_threshold: new value that the brady threshold will be changed to
         """
@@ -117,7 +124,9 @@ class ECGMeasure:
 
     def detect_rhythm(self):
         """.. function:: detect_rhythm(self, hr)
+
         Detects bradycardia & tachycardia based on threshold input and writes instances to hr DataFrame
+        
         :param self: instance of ECGMeasure class
         """
 
