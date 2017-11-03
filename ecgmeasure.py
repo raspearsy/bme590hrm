@@ -28,7 +28,7 @@ class ECGMeasure:
         # self.__hr_rawdata = inputfile.ecg_dataframe
         self.__hr_rawdata = rawdata
         self.data = None
-        self.avgdata = None
+        self.avg_data = None
         self.averaging_period = None
         self.avg_hr = None
         
@@ -150,21 +150,21 @@ class ECGMeasure:
         self.hrdetector()
         
         columns = ['HeartRate', 'time', 'bradycardia_annotations', 'tachycardia_annotations']
-        num_avg_bins = floor(self.data['time'].iat[-1]/self.averaging_period)
+        num_avg_bins = math.floor(self.data['time'].iat[-1]/self.averaging_period)
         time_intervals = list(range(1, num_avg_bins+1))
         
-        avgdata = pd.DataFrame(numpy.empty(((len(time_intervals)), 4)), columns=columns)
-        avgdata['time'] = time_intervals
-        avgdata['HeartRate'] = None
-        avgdata['bradycardia_annotations'] = False
-        avgdata['tachycardia_annotations'] = False
+        avg_data = pd.DataFrame(numpy.empty(((len(time_intervals)), 4)), columns=columns)
+        avg_data['time'] = time_intervals
+        avg_data['HeartRate'] = None
+        avg_data['bradycardia_annotations'] = False
+        avg_data['tachycardia_annotations'] = False
 
         for i in range(0, num_avg_bins):
-            start_ind = int(np.floor(i*averaging_period/5))
-            stop_ind = int(np.floor((i*averaging_period+averaging_period)/5)-1)
-            avgdata.at[i, 'HeartRate'] = self.data['HeartRate'][start_ind:stop_ind].mean()
+            start_ind = int(numpy.floor(i*self.averaging_period/5))
+            stop_ind = int(numpy.floor((i*self.averaging_period+self.averaging_period)/5)-1)
+            avg_data.at[i, 'HeartRate'] = self.data['HeartRate'][start_ind:stop_ind].mean()
 
-        self.avgdata = avgdata
+        self.avg_data = avg_data
 
     def detect_rhythm_avg(self):
         """.. function:: detect_rhythm_avg(self)
@@ -175,11 +175,11 @@ class ECGMeasure:
         :param self: instance of ECGMeasure class
         """
         
-        for x in range(0, len(self.avgdata)):
-            if self.avgdata['HeartRate'][x] < self.__thrbrady:
-                self.avgdata.at[x, 'bradycardia_annotations'] = True
-            elif self.avgdata['HeartRate'][x] > self.__thrtachy:
-                self.avgdata.at[x, 'tachycardia_annotations'] = True
+        for x in range(0, len(self.avg_data)):
+            if self.avg_data['HeartRate'][x] < self.__thr_brady:
+                self.avg_data.at[x, 'bradycardia_annotations'] = True
+            elif self.avg_data['HeartRate'][x] > self.__thr_tachy:
+                self.avg_data.at[x, 'tachycardia_annotations'] = True
 
 
 def main(arguments):

@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from ecgmeasure import ECGMeasure
 
 app = Flask(__name__)
-
+app.config["JSON_SORT_KEYS"] = False
 # probably not the most elegant way of doing this, but should work
 # more ideal to use something innate to the post to increment the counter
 request_counter = 0
@@ -40,7 +40,7 @@ def average():
     averaging_period = request.json['averaging_period']
     time = request.json['time']
     voltages = request.json['voltage']
-    hr_rawdata = {'time': time, 'voltages': voltages}
+    hr_rawdata = {'time': time, 'voltage': voltages}
 
     hr = ECGMeasure(rawdata=hr_rawdata)
     hr.acquire_avgper(averaging_period=averaging_period)
