@@ -11,7 +11,8 @@ class ECGMeasure:
     __init__ sets the __hr_rawdata
     """
 
-    def __init__(self, file_bool=False, argument="ecg_data.csv", threshold=0.9, thr_brady=50, thr_tachy=140, rawdata=None):
+    def __init__(self, file_bool=False, argument="ecg_data.csv", threshold=0.9, thr_brady=50, thr_tachy=140,
+                 rawdata=None):
         """.. function:: __init__(self, threshold=0.9, thr_brady=50, thr_tachy=140)
 
         :param argument: specifies the input file name
@@ -37,16 +38,17 @@ class ECGMeasure:
 
     def thresholdhr(self):
         """ .. function:: thresholdhr(self)
+
         Will return a list of thresholds, as well as the number of chunks and data_chunk size
+        
         :param: self: instance of the ECGMeasure class
         """
 
-        #self.__hr_rawdata['voltage'] = list(range(0, 100, 10))
-        #self.__hr_rawdata['time'] = list(range(0, 50, 5))
+        # self.__hr_rawdata['voltage'] = list(range(0, 100, 10))
+        # self.__hr_rawdata['time'] = list(range(0, 50, 5))
         time_step = self.__hr_rawdata['time'][2] - self.__hr_rawdata['time'][1]
         data_chunk = int(math.floor((5 / time_step)))
         number_chunks = int(math.floor((len(self.__hr_rawdata['time']) / data_chunk)))
-
         threshold_hr = [None] * number_chunks
 
         for j in range(0, number_chunks):
@@ -57,7 +59,9 @@ class ECGMeasure:
 
     def hrdetector(self):
         """.. function:: hrdetector(self)
+
         Use threshold detection to specify a heart beat (QRS height) and estimate both instantaneous and hr over delta_t
+
         :param self: instance of ECGMeasure class
         """
         # delta_t = input('Enter how long you would like to average your heart rate over (in s): ')
@@ -149,6 +153,7 @@ class ECGMeasure:
                 elif self.data['HeartRate'][x] > self.__thr_tachy:
                     tachycount += 1
                     self.data.at[x, 'tachycardia_annotations'] = True
+
     def acquire_avgper(self, averaging_period=5):
         """.. function:: acquire_avgper(self, averaging_period)
         
@@ -168,7 +173,6 @@ class ECGMeasure:
         """
 
         self.hrdetector()
-        
         columns = ['HeartRate', 'time', 'bradycardia_annotations', 'tachycardia_annotations']
         num_avg_bins = int(math.floor(self.data['time'].iat[-1]/self.averaging_period))
         time_intervals = list(range(1, num_avg_bins+1))

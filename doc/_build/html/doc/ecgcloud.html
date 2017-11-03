@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>ecgoutput module &#8212; bme590hrm  documentation</title>
+    <title>ecgcloud module &#8212; bme590hrm  documentation</title>
     
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -41,33 +41,58 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="module-ecgoutput">
-<span id="ecgoutput-module"></span><h1>ecgoutput module<a class="headerlink" href="#module-ecgoutput" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
-<dt id="ecgoutput.ECGOutput">
-<em class="property">class </em><code class="descclassname">ecgoutput.</code><code class="descname">ECGOutput</code><span class="sig-paren">(</span><em>hr_data</em>, <em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#ecgoutput.ECGOutput" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>Output Class
-Outputs a text file containing the final heart rate data over a specified period of time</p>
-<dl class="method">
-<dt id="ecgoutput.ECGOutput.write_ecg">
-<code class="descname">write_ecg</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ecgoutput.ECGOutput.write_ecg" title="Permalink to this definition">¶</a></dt>
+  <div class="section" id="module-ecgcloud">
+<span id="ecgcloud-module"></span><h1>ecgcloud module<a class="headerlink" href="#module-ecgcloud" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="ecgcloud.average">
+<code class="descclassname">ecgcloud.</code><code class="descname">average</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ecgcloud.average" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="function">
 <dt>
-<code class="descname">write_ecg</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span></dt>
+<code class="descclassname">ecgcloud.</code><code class="descname">average</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
 <dd></dd></dl>
 
-<p>Create txt file summarizing ECG analysis</p>
+<p>Provides average heart rate data</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ecgcloud.not_found">
+<code class="descclassname">ecgcloud.</code><code class="descname">not_found</code><span class="sig-paren">(</span><em>error</em><span class="sig-paren">)</span><a class="headerlink" href="#ecgcloud.not_found" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="function">
+<dt>
+<code class="descclassname">ecgcloud.</code><code class="descname">not_found</code><span class="sig-paren">(</span><em>error</em><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>Unknown Error</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; instance of ECGOutput class</td>
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body">error: Error Message</td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
+<dl class="function">
+<dt id="ecgcloud.requests">
+<code class="descclassname">ecgcloud.</code><code class="descname">requests</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ecgcloud.requests" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="function">
+<dt>
+<code class="descclassname">ecgcloud.</code><code class="descname">requests</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>Provides the number of requests</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ecgcloud.summary">
+<code class="descclassname">ecgcloud.</code><code class="descname">summary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ecgcloud.summary" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="function">
+<dt>
+<code class="descclassname">ecgcloud.</code><code class="descname">summary</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<p>Provides a summary of heart rate data</p>
 </dd></dl>
 
 </div>
@@ -87,7 +112,7 @@ Outputs a text file containing the final heart rate data over a specified period
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/doc/ecgoutput.rst.txt"
+      <li><a href="../_sources/doc/ecgcloud.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -113,7 +138,7 @@ Outputs a text file containing the final heart rate data over a specified period
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="../_sources/doc/ecgoutput.rst.txt"
+      <a href="../_sources/doc/ecgcloud.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 
