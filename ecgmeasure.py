@@ -37,9 +37,7 @@ class ECGMeasure:
 
     def thresholdhr(self):
         """ .. function:: thresholdhr(self)
-
         Will return a list of thresholds, as well as the number of chunks and data_chunk size
-
         :param: self: instance of the ECGMeasure class
         """
 
@@ -58,9 +56,7 @@ class ECGMeasure:
 
     def hrdetector(self):
         """.. function:: hrdetector(self)
-
         Use threshold detection to specify a heart beat (QRS height) and estimate both instantaneous and hr over delta_t
-
         :param self: instance of ECGMeasure class
         """
         # delta_t = input('Enter how long you would like to average your heart rate over (in s): ')
@@ -95,9 +91,7 @@ class ECGMeasure:
 
     def change_threshold(self, threshold):
         """.. function:: change_threshold(self, threshold)
-
         Change the threshold that specifies a heart beat
-
         :param self: instance of ECGMeasure class
         :param threshold: new value that threshold will be changed to
         """
@@ -106,9 +100,7 @@ class ECGMeasure:
 
     def change_brady_threshold(self, brady_threshold):
         """.. function:: change_brady_threshold(self, brady_threshold)
-
         Change the threshold that indicates whether Bradycardia is detected
-
         :param self: instance of ECGMeasure class
         :param brady_threshold: new value that the brady threshold will be changed to
         """
@@ -124,9 +116,8 @@ class ECGMeasure:
 
     def detect_rhythm(self):
         """.. function:: detect_rhythm(self, hr)
-
         Detects bradycardia & tachycardia based on threshold input and writes instances to hr DataFrame
-        
+
         :param self: instance of ECGMeasure class
         """
 
@@ -153,9 +144,7 @@ class ECGMeasure:
 
     def acquire_avgper(self, averaging_period=5):
         """.. function:: acquire_avgper(self, averaging_period)
-
         Adds averaging_period attribute to self
-
         :param self: instance of ECGMeasure class
         :param averaging_period: period in seconds for averaging inst hr data
         """
@@ -163,9 +152,7 @@ class ECGMeasure:
 
     def hrdetector_avg(self):
         """.. function:: hrdetector_average(self)
-
         Creates dataframe to contain average data and finds the average for each averaging period
-
         :param self: instance of ECGMeasure class
         """
 
@@ -189,10 +176,8 @@ class ECGMeasure:
 
     def detect_rhythm_avg(self):
         """.. function:: detect_rhythm_avg(self)
-
         Detects bradycardia & tachycardia from average data based on threshold input and writes instances to avgdata
         DataFrame
-
         :param self: instance of ECGMeasure class
         """
 
