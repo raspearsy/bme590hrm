@@ -19,7 +19,7 @@ def test_detect_rhythm_brady():
 
     Test output of bradydetector when threshold is set to 50.
     """
-    bm_b = ECGMeasure()
+    bm_b = ECGMeasure(file_bool=True)
     bm_b.data = get_test_hr1(a=20)
     bm_b.detect_rhythm()
 
@@ -34,7 +34,7 @@ def test_detect_rhythm_brady2():
 
     Test bradydetector when threshold is set to 100.
     """
-    bm_b2 = ECGMeasure()
+    bm_b2 = ECGMeasure(file_bool=True)
     bm_b2.data = get_test_hr1()
     bm_b2.change_brady_threshold(brady_threshold=100)
     bm_b2.detect_rhythm()
@@ -50,7 +50,7 @@ def test_detect_rhythm_brady3():
 
     Test bradydetector when threshold is set to 0.
     """
-    bm_b3 = ECGMeasure()
+    bm_b3 = ECGMeasure(file_bool=True)
     bm_b3.data = get_test_hr1()
     bm_b3.change_brady_threshold(brady_threshold=0)
     bm_b3.detect_rhythm()
@@ -66,7 +66,7 @@ def test_detect_rhythm_tachy():
 
     Test output of tachydetector when threshold is set to 140.
     """
-    bm_t = ECGMeasure()
+    bm_t = ECGMeasure(file_bool=True)
     bm_t.data = get_test_hr1(c=200)
     bm_t.detect_rhythm()
 
@@ -81,7 +81,7 @@ def test_detect_rhythm_tachy2():
 
     Test tachydetector when threshold is set to 1000.
     """
-    bm_t2 = ECGMeasure()
+    bm_t2 = ECGMeasure(file_bool=True)
     bm_t2.data = get_test_hr1()
     bm_t2.change_tachy_threshold(tachy_threshold=1000)
     bm_t2.detect_rhythm()
@@ -97,7 +97,7 @@ def test_detect_rhythm_tachy3():
 
     Test tachydetector when threshold is set to 0.
     """
-    bm_t3 = ECGMeasure()
+    bm_t3 = ECGMeasure(file_bool=True)
     bm_t3.data = get_test_hr1()
     bm_t3.change_tachy_threshold(tachy_threshold=0)
     bm_t3.detect_rhythm()
@@ -113,7 +113,7 @@ def test_detect_rhythm_bradytachy():
 
     Test output of tachy/bradydetector when brady threshold is set to 50 and tachy to 100.
     """
-    bm_bt = ECGMeasure()
+    bm_bt = ECGMeasure(file_bool=True)
     bm_bt.data = get_test_hr1(a=20, c=200)
     bm_bt.detect_rhythm()
 

@@ -39,10 +39,23 @@ Goals:
 (7) create an annotated tag titled v1.0rc1 when assignment completed and ready for grading
 
 Desciription:
-Run HR_Measure.py which uses the read_file.py module to read a CSV file and convert it into a DataFrame. This DataFrame is then used in the hrdetector, bradydector, and tachydector functions in HR_Measure.py. 
+UPDATED VERSION
+Link for virtual server: http://vcm-1844.vm.duke.edu:5000
+
+/api/requests is a GET endpoint that provides the number of requests 
+
+/api/summary is a POST endpoint that provides a summary of the heart rate data
+It needs a time interval and corresponding voltages for each time in that time interval.
+It returns the times, instantaneous heart rates, tachycardia annotations, and bradycardia annotations
+
+/api/average is a POST endpoint that provides average heart rate data
+It needs an averaging period, a time interval, and corresponding voltages for each time in that time interval.
+It returns the averaging period, the time interval, average heart rates, tachycardia annotations, and bradycardia annotations.
+
+Run ecgmeasure.py which uses the ecginput.py module to read a CSV file and convert it into a DataFrame. This DataFrame is then used in the hrdetector, bradydector, and tachydector functions in HR_Measure.py. 
 
 The hrdetector function uses threshold detection to specify a heart beat and estimate both instantaneous heart rate and heart rate over a user-specified number of minutes. 
 
 The bradydetector function then takes the heart rate data and indicates whether bradycardia is present based on an input threshold value. This is displayed with an additional column titled B/T representing the disease that is present or if the patient is healthy. The tachydetector function then takes this new DataFrame and also indicates whether tachycardia is present based on an input threshold value. This is also displayed in the B/T column. 
 
-Finally, the output.py module is called to convert this last DataFrame into a text file that gives a summary of the ECG analysis.
+Finally, the ecgoutput.py module is called to convert this last DataFrame into a text file that gives a summary of the ECG analysis.

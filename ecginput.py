@@ -32,6 +32,7 @@ class ECGInput:
                 raise Exception("No data found")
             self.ecg_dataframe['time'] = pd.to_numeric(self.ecg_dataframe['time'], errors='coerce')
             self.ecg_dataframe['voltage'] = pd.to_numeric(self.ecg_dataframe['voltage'], errors='coerce')
+            self.ecg_dataframe = self.ecg_dataframe.dropna(axis=0, how="any")
             self.ecg_dataframe = self.ecg_dataframe[abs(self.ecg_dataframe['voltage']) <= 300]
             self.ecg_dataframe = self.ecg_dataframe.reset_index()
             if len(self.ecg_dataframe) == 0:
